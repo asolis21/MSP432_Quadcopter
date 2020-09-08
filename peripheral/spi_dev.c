@@ -1,14 +1,14 @@
 #include "spi_dev.h"
 
-/*
- * SPI implementation for MSP432P401R
+/*--------------------LOW LEVEL I2C HARDWARE IMPLEMENTATION, DEVICE SPECIFIC--------------------*/
+/* EUSCI_B0
  * P1.6 -> MOSI
  * P1.7 -> MISO
- * P1.5 -> CLK
- * P6.4 -> CS
+ * P1.5 -> SCLK
+ * P2.5 -> CS
  */
 
-#ifdef MSP432P401R_FREERTOS_SPI
+#ifdef MSP432P401R_RTOS_SPI
 
 #include "ti_drivers_config.h"
 #include <ti/drivers/SPI.h>
@@ -66,8 +66,8 @@ void spi_dev_cs(uint8_t state)
 
 void spi_dev_init(uint32_t fclock, uint32_t fspi)
 {
-    P6->DIR |= BIT4
-    P6->OUT &= ~BIT4|BIT5;
+    P2->DIR |= BIT5;
+    P2->OUT &= ~BIT5;
 
     EUSCI_B0->CTLW0 |= EUSCI_B_CTLW0_SWRST;         //EUSCI in reset to modify registers
     EUSCI_B0->CTLW0 |= (EUSCI_B_CTLW0_MST  |        //SPI master
@@ -104,6 +104,30 @@ void spi_dev_read(uint8_t *data, uint32_t size)
 
 void spi_dev_cs(uint8_t state)
 {
-    P6->OUT |= (state == 1) ? BIT4 : ~BIT4;
+    P2->OUT |= (state == 1) ? BIT5 : ~BIT5;
 }
 
+#else
+#warning USING UN-IMPLEMENTED SPI COMMUNICATION, YOU MUST PROVIDE YOUR OWN SPECIFIC SPI INTERFACE
+
+void spi_dev_init(uint32_t fclock, uint32_t fspi)
+{
+
+}
+
+void spi_dev_write(uint8_t *data, uint32_t size)
+{
+
+}
+
+void spi_dev_read(uint8_t *data, uint32_t size)
+{
+
+}
+
+void spi_dev_cs(uint8_t state)
+{
+
+}
+
+#endif

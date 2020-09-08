@@ -1,6 +1,10 @@
-#include <peripheral/uart_dev.h>
+#include "uart_dev.h"
 
-/*UART0 Backend UART, used to communicate with PC. Use it for simple communication, or debugging*/
+/*--------------------LOW LEVEL UART HARDWARE IMPLEMENTATION, DEVICE SPECIFIC--------------------*/
+/* EUSCI_A0
+ * P1.2 -> RX
+ * P1.3 -> TX
+ */
 
 #ifdef MSP432P401R_RTOS_UART
 
@@ -68,7 +72,7 @@ void uart_dev_init(int fclock, int baudrate)
     uint32_t UCBR = N/16;
     uint32_t UCBRF = (uint32_t)( ((float)(N/16.0) - (uint32_t)(N/16))*16 );
 
-    //TODO: Find a better way to compute UCBRF and UCBRS values
+    //TODO: Find a better way to compute UCBRF and UCBRS values, THIS DOES NOT WORK!
     uart_config.clockPrescalar = UCBR;
     uart_config.firstModReg = UCBRF;
     uart_config.secondModReg = 0;
@@ -122,6 +126,24 @@ char get_char(void)
     c = EUSCI_A0->RXBUF;
 
     return c;
+}
+
+#else
+#warning USING UN-IMPLEMENTED UART COMMUNICATION, YOU MUST PROVIDE YOUR OWN SPECIFIC UART INTERFACE
+
+void uart_dev_init(int fclock, int baudrate)
+{
+
+}
+
+void print_char(char c)
+{
+
+}
+
+char get_char(void)
+{
+
 }
 
 #endif

@@ -12,7 +12,7 @@
 
 void *mainThread(void *arg0)
 {
-    UARTDEBUG_init(0, 9600);
+    UARTDEBUG_init(12000000, 9600);
     MPU9250_init();
     BME280_init();
     Madgwick_init();
@@ -65,7 +65,7 @@ void *mainThread(void *arg0)
         //UARTDEBUG_printf("mx=%f, my=%f, mz=%f\r\n", mag[0],   mag[1],   mag[2]);
 
         //UARTDEBUG_printf("%f,%f,%f,%f\n", pitch, roll, yaw, dt);
-        UARTDEBUG_printf("pressure = %f, humidity = %f, temperature = %f, altitude = %f\r\n", pressure/100.0f, humidity, temperature, altitude);
+        UARTDEBUG_printf("pitch = %f, roll = %f, yaw = %f, altitude = %f\r\n", pitch, roll, yaw, altitude);
 
 
         usleep(100000);

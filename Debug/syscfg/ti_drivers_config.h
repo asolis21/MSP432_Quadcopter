@@ -31,8 +31,8 @@ extern "C" {
  */
 
 /*
- *  SCL: P1.7
- *  SDA: P1.6
+ *  SCL: P6.5
+ *  SDA: P6.4
  */
 #define CONFIG_I2C_0                0
 

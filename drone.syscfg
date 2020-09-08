@@ -22,9 +22,9 @@ const UART1     = UART.addInstance();
  */
 I2C1.$name              = "CONFIG_I2C_0";
 I2C1.i2c.$name          = "MyI2C1";
-I2C1.i2c.$assign        = "EUSCI_B0";
-I2C1.i2c.sdaPin.$assign = "boosterpack.15";
-I2C1.i2c.sclPin.$assign = "boosterpack.14";
+I2C1.i2c.$assign        = "EUSCI_B1";
+I2C1.i2c.sdaPin.$assign = "boosterpack.10";
+I2C1.i2c.sclPin.$assign = "boosterpack.9";
 
 Power.performanceLevel3.$name = "ti_drivers_power_PowerMSP432PerfLevels0";
 Power.performanceLevel2.$name = "ti_drivers_power_PowerMSP432PerfLevels1";

@@ -1,6 +1,7 @@
 #include "BME280.h"
 #include <math.h>
-#include <peripheral/i2c_dev.h>
+#include "peripheral/i2c_dev.h"
+#include "peripheral/time_dev.h"
 
 //Based on Adafruit and Sparkfun libraries
 
@@ -35,7 +36,7 @@ uint16_t BME280_read_uint16(uint8_t reg);
 
 void BME280_init(void)
 {
-    i2c_init();
+    i2c_dev_init(12000000, I2C_DEV_400KHZ);
 
     //reset device
     BME280_write_uint8(BME280_REGISTER_SOFTRESET, 0xB6);
@@ -170,7 +171,7 @@ float BME280_temperature(void)
     uint8_t raw_data[3];
     int32_t var1, var2;
 
-    i2c_read(BME280_ADDRESS_ALTERNATE, BME280_REGISTER_TEMPDATA, raw_data, 3);
+    i2c_dev_read(BME280_ADDRESS_ALTERNATE, BME280_REGISTER_TEMPDATA, raw_data, 3);
     int32_t adc_T = (int32_t)(((int32_t)(raw_data[0] << 16)) | ((int32_t)(raw_data[1] << 8)) | raw_data[2]);
 
     if(adc_T == 0x800000) return NAN;
@@ -193,7 +194,7 @@ float BME280_pressure(void)
     //Must be done to get t_fine
     BME280_temperature();
 
-    i2c_read(BME280_ADDRESS_ALTERNATE, BME280_REGISTER_PRESSUREDATA, raw_data, 3);
+    i2c_dev_read(BME280_ADDRESS_ALTERNATE, BME280_REGISTER_PRESSUREDATA, raw_data, 3);
     int32_t adc_P = (int32_t)(((int32_t)(raw_data[0] << 16)) | ((int32_t)(raw_data[1] << 8)) | raw_data[2]);
 
     if(adc_P == 0x800000) return NAN;
@@ -224,7 +225,7 @@ float BME280_humidity(void)
     //Must be done to get t_fine
     BME280_temperature();
 
-    i2c_read(BME280_ADDRESS_ALTERNATE, BME280_REGISTER_HUMIDDATA, raw_data, 2);
+    i2c_dev_read(BME280_ADDRESS_ALTERNATE, BME280_REGISTER_HUMIDDATA, raw_data, 2);
     int32_t adc_H = (int32_t)((uint16_t)(raw_data[0] << 8) | raw_data[1]);
 
     if(adc_H == 0x8000) return NAN;
@@ -263,13 +264,13 @@ uint8_t BME280_who(void)
 void BME280_write_uint8(uint8_t reg, uint8_t value)
 {
     uint8_t cmd[] = {reg, value};
-    i2c_write(BME280_ADDRESS_ALTERNATE, cmd, 2);
+    i2c_dev_write(BME280_ADDRESS_ALTERNATE, cmd, 2);
 }
 
 uint8_t BME280_read_uint8(uint8_t reg)
 {
     uint8_t raw_data;
-    i2c_read(BME280_ADDRESS_ALTERNATE, reg, &raw_data, 1);
+    i2c_dev_read(BME280_ADDRESS_ALTERNATE, reg, &raw_data, 1);
 
     return raw_data;
 }
@@ -277,7 +278,7 @@ uint8_t BME280_read_uint8(uint8_t reg)
 int16_t BME280_read_int16(uint8_t reg)
 {
     uint8_t raw_data[2];
-    i2c_read(BME280_ADDRESS_ALTERNATE, reg, raw_data, 2);
+    i2c_dev_read(BME280_ADDRESS_ALTERNATE, reg, raw_data, 2);
 
     int16_t value = ((uint16_t)(raw_data[1] << 8) | raw_data[0]);
 
@@ -287,7 +288,7 @@ int16_t BME280_read_int16(uint8_t reg)
 uint16_t BME280_read_uint16(uint8_t reg)
 {
     uint8_t raw_data[2];
-    i2c_read(BME280_ADDRESS_ALTERNATE, reg, raw_data, 2);
+    i2c_dev_read(BME280_ADDRESS_ALTERNATE, reg, raw_data, 2);
 
     uint16_t value = ((uint16_t)(raw_data[1] << 8) | raw_data[0]);
 

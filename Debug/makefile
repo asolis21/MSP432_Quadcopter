@@ -19,8 +19,10 @@ ORDERED_OBJS += \
 "./madgwick.obj" \
 "./main.obj" \
 "./servo.obj" \
-"./core/i2c_dev.obj" \
-"./core/uart_dev.obj" \
+"./peripheral/i2c_dev.obj" \
+"./peripheral/spi_dev.obj" \
+"./peripheral/time_dev.obj" \
+"./peripheral/uart_dev.obj" \
 "../MSP_EXP432P401R_FREERTOS.cmd" \
 $(GEN_CMDS__FLAG) \
 -l"ti/display/lib/display.aem4f" \
@@ -40,9 +42,9 @@ RMDIR := RMDIR /S/Q
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include subdir_vars.mk
--include core/subdir_vars.mk
+-include peripheral/subdir_vars.mk
 -include subdir_rules.mk
--include core/subdir_rules.mk
+-include peripheral/subdir_rules.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -176,8 +178,8 @@ HAL.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(GEN_MISC_FILES__QUOTED)$(BIN_OUTPUTS__QUOTED)$(GEN_FILES__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "BME280.obj" "GPS.obj" "MPU9250.obj" "UARTDEBUG.obj" "syscfg\ti_drivers_config.obj" "hal_main.obj" "madgwick.obj" "main.obj" "servo.obj" "core\i2c_dev.obj" "core\uart_dev.obj" 
-	-$(RM) "BME280.d" "GPS.d" "MPU9250.d" "UARTDEBUG.d" "syscfg\ti_drivers_config.d" "hal_main.d" "madgwick.d" "main.d" "servo.d" "core\i2c_dev.d" "core\uart_dev.d" 
+	-$(RM) "BME280.obj" "GPS.obj" "MPU9250.obj" "UARTDEBUG.obj" "syscfg\ti_drivers_config.obj" "hal_main.obj" "madgwick.obj" "main.obj" "servo.obj" "peripheral\i2c_dev.obj" "peripheral\spi_dev.obj" "peripheral\time_dev.obj" "peripheral\uart_dev.obj" 
+	-$(RM) "BME280.d" "GPS.d" "MPU9250.d" "UARTDEBUG.d" "syscfg\ti_drivers_config.d" "hal_main.d" "madgwick.d" "main.d" "servo.d" "peripheral\i2c_dev.d" "peripheral\spi_dev.d" "peripheral\time_dev.d" "peripheral\uart_dev.d" 
 	-$(RMDIR) $(GEN_MISC_DIRS__QUOTED)
 	-@echo 'Finished clean'
 	-@echo ' '

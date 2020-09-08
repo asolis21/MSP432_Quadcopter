@@ -40,12 +40,12 @@ I2CMSP432_Object i2cMSP432Objects[CONFIG_I2C_COUNT];
 const I2CMSP432_HWAttrsV1 i2cMSP432HWAttrs[CONFIG_I2C_COUNT] = {
     /* CONFIG_I2C_0 */
     {
-        .baseAddr = EUSCI_B0_BASE,
-        .intNum = INT_EUSCIB0,
+        .baseAddr = EUSCI_B1_BASE,
+        .intNum = INT_EUSCIB1,
         .intPriority = (~0),
         .clockSource = EUSCI_B_I2C_CLOCKSOURCE_SMCLK,
-        .dataPin = I2CMSP432_P1_6_UCB0SDA,
-        .clkPin  = I2CMSP432_P1_7_UCB0SCL
+        .dataPin = I2CMSP432_P6_4_UCB1SDA,
+        .clkPin  = I2CMSP432_P6_5_UCB1SCL
     },
 };
 

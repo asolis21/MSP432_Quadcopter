@@ -1,6 +1,9 @@
 #include "MPU9250.h"
+#include "peripheral/i2c_dev.h"
+#include "peripheral/time_dev.h"
+
 #include <math.h>
-#include <peripheral/i2c_dev.h>
+
 
 //Based on Kriswner and Betaflight
 
@@ -25,7 +28,7 @@ static float gyro_sca;
 
 void MPU9250_init(void)
 {
-    i2c_init();
+    i2c_dev_init(12000000, I2C_DEV_400KHZ);
     MPU9250_write_byte(PWR_MGMT_1, 0x00);
     delay(100);
 
@@ -51,7 +54,7 @@ void AK8963_init(void)
     delay(10);
 
     uint8_t raw_data[3];
-    i2c_read(AK8963_ADDRESS, AK8963_ASAX, raw_data, 3);
+    i2c_dev_read(AK8963_ADDRESS, AK8963_ASAX, raw_data, 3);
     mag_cal[0] =(float)(raw_data[0] - 128.0f)/256.0f + 1.0f;
     mag_cal[1] =(float)(raw_data[1] - 128.0f)/256.0f + 1.0f;
     mag_cal[2] =(float)(raw_data[2] - 128.0f)/256.0f + 1.0f;
@@ -68,7 +71,7 @@ void AK8963_init(void)
 uint8_t MPU9250_who(void)
 {
     uint8_t c;
-    i2c_read(MPU9250_1_ADDRESS, WHO_AM_I_MPU9250, &c, 1);
+    i2c_dev_read(MPU9250_1_ADDRESS, WHO_AM_I_MPU9250, &c, 1);
 
     return c;
 }
@@ -76,7 +79,7 @@ uint8_t MPU9250_who(void)
 uint8_t AK8963_who(void)
 {
     uint8_t c;
-    i2c_read(AK8963_ADDRESS, WHO_AM_I_AK8963, &c, 1);
+    i2c_dev_read(AK8963_ADDRESS, WHO_AM_I_AK8963, &c, 1);
 
     return c;
 }
@@ -90,7 +93,7 @@ void MPU9250_reset(void)
 void MPU9250_raw_accelerometer(int16_t *accel_data)
 {
     uint8_t raw_data[6];
-    i2c_read(MPU9250_1_ADDRESS, ACCEL_XOUT_H, raw_data, 6);
+    i2c_dev_read(MPU9250_1_ADDRESS, ACCEL_XOUT_H, raw_data, 6);
 
     accel_data[0] = (((int16_t)raw_data[0]) << 8) | raw_data[1];
     accel_data[1] = (((int16_t)raw_data[2]) << 8) | raw_data[3];
@@ -100,7 +103,7 @@ void MPU9250_raw_accelerometer(int16_t *accel_data)
 void MPU9250_raw_gyroscope(int16_t *gyro_data)
 {
     uint8_t raw_data[6];
-    i2c_read(MPU9250_1_ADDRESS, GYRO_XOUT_H, raw_data, 6);
+    i2c_dev_read(MPU9250_1_ADDRESS, GYRO_XOUT_H, raw_data, 6);
 
     gyro_data[0] = (((int16_t)raw_data[0]) << 8) | raw_data[1];
     gyro_data[1] = (((int16_t)raw_data[2]) << 8) | raw_data[3];
@@ -111,7 +114,7 @@ void AK8963_raw_magnetometer(int16_t *mag_data)
 {
     uint8_t raw_data[7];
 
-    i2c_read(AK8963_ADDRESS, AK8963_XOUT_L, raw_data, 7);
+    i2c_dev_read(AK8963_ADDRESS, AK8963_XOUT_L, raw_data, 7);
     if(!(raw_data[6] & 0x08))
     {
         mag_data[0] = (((int16_t)raw_data[1]) << 8) | raw_data[0];
@@ -332,12 +335,12 @@ void AK8963_calibrate_magnetometer(void)
 void AK8963_write_byte(uint8_t reg, uint8_t value)
 {
     uint8_t cmd[] = {reg, value};
-    i2c_write(AK8963_ADDRESS, cmd, 2);
+    i2c_dev_write(AK8963_ADDRESS, cmd, 2);
 }
 
 void MPU9250_write_byte(uint8_t reg, uint8_t value)
 {
     uint8_t cmd[] = {reg, value};
-    i2c_write(MPU9250_1_ADDRESS, cmd, 2);
+    i2c_dev_write(MPU9250_1_ADDRESS, cmd, 2);
 }
 

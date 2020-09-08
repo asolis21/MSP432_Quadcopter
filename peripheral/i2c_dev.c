@@ -1,11 +1,11 @@
 #include <peripheral/i2c_dev.h>
 
 /*--------------------LOW LEVEL I2C HARDWARE IMPLEMENTATION, DEVICE SPECIFIC--------------------*/
-/*
- * P1.6 -> SDA
- * P1.7 -> SCL
+/* EUSCI_B1
+ * P6.4 -> SDA
+ * P6.5 -> SCL
  */
-#ifdef MSP432P401R_FREERTOS_I2C
+#ifdef MSP432P401R_RTOS_I2C
 
 #include <unistd.h>
 #include <ti/drivers/I2C.h>
@@ -14,15 +14,26 @@
 I2C_Handle MPU9250_handle;
 bool i2c_initialized = false;
 
-
-void i2c_init(void)
+void i2c_dev_init(uint32_t fclock, uint32_t i2c_clock)
 {
     if(i2c_initialized) return;
     I2C_init();
 
     I2C_Params params;
     I2C_Params_init(&params);
-    params.bitRate = I2C_400kHz;
+
+    switch(i2c_clock)
+    {
+    case I2C_DEV_100KHZ:
+        params.bitRate = I2C_100kHz;
+        break;
+    case I2C_DEV_400KHZ:
+        params.bitRate = I2C_400kHz;
+        break;
+    case I2C_DEV_1MHZ:
+        params.bitRate = I2C_1000kHz;
+        break;
+    }
 
     MPU9250_handle = I2C_open(CONFIG_I2C_0, &params);
 
@@ -35,7 +46,7 @@ void i2c_init(void)
     i2c_initialized = true;
 }
 
-bool i2c_write(uint8_t slave_address, uint8_t *data, uint32_t size)
+bool i2c_dev_write(uint8_t slave_address, uint8_t *data, uint32_t size)
 {
     I2C_Transaction t = {0};
 
@@ -48,7 +59,7 @@ bool i2c_write(uint8_t slave_address, uint8_t *data, uint32_t size)
     return I2C_transfer(MPU9250_handle, &t);
 }
 
-bool i2c_read(uint8_t slave_address, uint8_t reg, uint8_t *data, uint32_t size)
+bool i2c_dev_read(uint8_t slave_address, uint8_t reg, uint8_t *data, uint32_t size)
 {
     I2C_Transaction t = {0};
 
@@ -61,12 +72,6 @@ bool i2c_read(uint8_t slave_address, uint8_t reg, uint8_t *data, uint32_t size)
     return I2C_transfer(MPU9250_handle, &t);
 }
 
-//TODO: Move this to a different file!
-void delay(int ms)
-{
-    usleep(1000*ms);
-}
-
 #elif defined(MSP432P401R_DRIVERLIB_I2C)
 
 #define __MSP432P401R__
@@ -74,72 +79,66 @@ void delay(int ms)
 
 bool i2c_initialized = false;
 
-const eUSCI_I2C_MasterConfig i2c_config =
+eUSCI_I2C_MasterConfig i2c_config =
 {
     EUSCI_B_I2C_CLOCKSOURCE_SMCLK,          // SMCLK Clock Source
     12000000,                               // SMCLK = 12MHz
-    EUSCI_B_I2C_SET_DATA_RATE_400KBPS,      // Desired I2C Clock of 100khz
+    EUSCI_B_I2C_SET_DATA_RATE_400KBPS,      // Desired I2C Clock of 400khz
     0,                                      // No byte counter threshold
     EUSCI_B_I2C_NO_AUTO_STOP                // No Autostop
 };
 
-void i2c_init(void)
+void i2c_dev_init(uint32_t fclock, uint32_t i2c_clock)
 {
     if(i2c_initialized) return;
 
-    GPIO_setAsPeripheralModuleFunctionInputPin(GPIO_PORT_P1, GPIO_PIN6 | GPIO_PIN7, GPIO_PRIMARY_MODULE_FUNCTION);
-    I2C_initMaster(EUSCI_B0_BASE, &i2c_config);
-    I2C_enableModule(EUSCI_B0_BASE);
+    i2c_config.i2cClk = fclock;
+    i2c_config.dataRate = i2c_clock;
+
+    GPIO_setAsPeripheralModuleFunctionInputPin(GPIO_PORT_P6, GPIO_PIN4 | GPIO_PIN5, GPIO_PRIMARY_MODULE_FUNCTION);
+    I2C_initMaster(EUSCI_B1_BASE, &i2c_config);
+    I2C_enableModule(EUSCI_B1_BASE);
 
     i2c_initialized = true;
 }
 
-bool i2c_write(uint8_t slave_adddress, uint8_t *data, uint32_t size)
+bool i2c_dev_write(uint8_t slave_adddress, uint8_t *data, uint32_t size)
 {
-    while (I2C_masterIsStopSent(EUSCI_B0_BASE));
-    I2C_setSlaveAddress(EUSCI_B0_BASE, slave_adddress);
+    while (I2C_masterIsStopSent(EUSCI_B1_BASE));
+    I2C_setSlaveAddress(EUSCI_B1_BASE, slave_adddress);
 
-    I2C_masterSendMultiByteStart(EUSCI_B0_BASE, data[0]);
+    I2C_masterSendMultiByteStart(EUSCI_B1_BASE, data[0]);
 
     uint32_t i;
     for(i = 1; i < size - 1; i++)
     {
-        I2C_masterSendMultiByteNext(EUSCI_B0_BASE, data[i]);
+        I2C_masterSendMultiByteNext(EUSCI_B1_BASE, data[i]);
     }
 
-    I2C_masterSendMultiByteFinish(EUSCI_B0_BASE, data[i]);
+    I2C_masterSendMultiByteFinish(EUSCI_B1_BASE, data[i]);
 
     return true;
 }
 
-bool i2c_read(uint8_t slave_adddress, uint8_t reg, uint8_t *data, uint32_t size)
+bool i2c_dev_read(uint8_t slave_adddress, uint8_t reg, uint8_t *data, uint32_t size)
 {
-    I2C_setSlaveAddress(EUSCI_B0_BASE, slave_adddress);
-    I2C_masterSendMultiByteStart(EUSCI_B0_BASE, reg);
-    while(!(EUSCI_B0->IFG & EUSCI_B_IFG_TXIFG0));
+    I2C_setSlaveAddress(EUSCI_B1_BASE, slave_adddress);
+    I2C_masterSendMultiByteStart(EUSCI_B1_BASE, reg);
+    while(!(EUSCI_B1->IFG & EUSCI_B_IFG_TXIFG0));
 
-    I2C_masterReceiveStart(EUSCI_B0_BASE);
+    I2C_masterReceiveStart(EUSCI_B1_BASE);
 
-    while(I2C_masterIsStartSent(EUSCI_B0_BASE));
+    while(I2C_masterIsStartSent(EUSCI_B1_BASE));
 
     uint32_t i;
     for(i = 0; i < size - 1; i++)
     {
-        data[i] = I2C_masterReceiveSingle(EUSCI_B0_BASE);
+        data[i] = I2C_masterReceiveSingle(EUSCI_B1_BASE);
     }
 
-    data[i] = I2C_masterReceiveMultiByteFinish(EUSCI_B0_BASE);
+    data[i] = I2C_masterReceiveMultiByteFinish(EUSCI_B1_BASE);
 
     return true;
-}
-
-void delay(int ms)
-{
-    while(ms--)
-    {
-        __delay_cycles(1200);
-    }
-
 }
 
 #elif defined(MSP432P401R_DRA_I2C)
@@ -149,112 +148,101 @@ void delay(int ms)
 
 bool i2c_initialized = false;
 
-void i2c_init(void)
+void i2c_dev_init(uint32_t fclock, uint32_t i2c_clock)
 {
     if(i2c_initialized) return;
 
-    P1->SEL0 |= (BIT6|BIT7);
-    P1->SEL1 &= ~(BIT6|BIT7);
+    P6->SEL0 |= (BIT4|BIT5);
+    P6->SEL1 &= ~(BIT5|BIT5);
 
-    EUSCI_B0->CTLW0 |= EUSCI_A_CTLW0_SWRST;
-    EUSCI_B0->CTLW0 |= EUSCI_B_CTLW0_MODE_3 |       //I2C mode
+    EUSCI_B1->CTLW0 |= EUSCI_A_CTLW0_SWRST;
+    EUSCI_B1->CTLW0 |= EUSCI_B_CTLW0_MODE_3 |       //I2C mode
                        EUSCI_B_CTLW0_MST    |       //Master mode
                        EUSCI_B_CTLW0_SYNC   |       //Sync mode
                        EUSCI_B_CTLW0_SSEL__SMCLK;   //SMCLK
 
-    //EUSCI_B0->CTLW1 |= EUSCI_B_CTLW1_ASTP_2;        //Automatic stop generated
-    EUSCI_B0->BRW = 30;                             //SMCLK/30 = 100KHz
+    EUSCI_B1->BRW = fclock/i2c_clock;                             //SMCLK/30 = 100KHz
 
-    EUSCI_B0->CTLW0 &= ~EUSCI_A_CTLW0_SWRST;
+    EUSCI_B1->CTLW0 &= ~EUSCI_A_CTLW0_SWRST;
 
     i2c_initialized = true;
 }
 
  /*| S | Slave Address | R/W | ACK | Data | ACK | S | Slave Address | ACK Data | ACK | P | */
-bool i2c_write(uint8_t slave_address, uint8_t *data, uint32_t size)
+bool i2c_dev_write(uint8_t slave_address, uint8_t *data, uint32_t size)
 {
     /* Making sure the last transaction has been completely sent out */
-    while(EUSCI_B0->CTLW0 & EUSCI_B_CTLW0_TXSTP);
+    while(EUSCI_B1->CTLW0 & EUSCI_B_CTLW0_TXSTP);
 
-    EUSCI_B0->I2CSA = slave_address;
+    EUSCI_B1->I2CSA = slave_address;
 
     //Sent start condition
-    EUSCI_B0->CTLW0 |=  EUSCI_B_CTLW0_TR |   //I2C transmit
+    EUSCI_B1->CTLW0 |=  EUSCI_B_CTLW0_TR |   //I2C transmit
                         EUSCI_B_CTLW0_TXSTT; //Start condition
 
     //Poll for transmit interrupt flag and start condition flag.
-    while((EUSCI_B0->CTLW0 & EUSCI_B_CTLW0_TXSTT) || !(EUSCI_B0->IFG & EUSCI_B_IFG_TXIFG0));
+    while((EUSCI_B1->CTLW0 & EUSCI_B_CTLW0_TXSTT) || !(EUSCI_B1->IFG & EUSCI_B_IFG_TXIFG0));
 
     //Send first byte
-    EUSCI_B0->TXBUF = data[0];
+    EUSCI_B1->TXBUF = data[0];
 
     uint32_t i;
     for(i = 1; i < size; i++)
     {
         //Poll for TX flag
-        while(!(EUSCI_B0->IFG & EUSCI_B_IFG_TXIFG0));
-        EUSCI_B0->TXBUF = data[i];
+        while(!(EUSCI_B1->IFG & EUSCI_B_IFG_TXIFG0));
+        EUSCI_B1->TXBUF = data[i];
     }
 
     //Poll for last byte sent
-    while(!(EUSCI_B0->IFG & EUSCI_B_IFG_TXIFG0));
+    while(!(EUSCI_B1->IFG & EUSCI_B_IFG_TXIFG0));
 
     //Send stop condition
-    EUSCI_B0->CTLW0 |= EUSCI_B_CTLW0_TXSTP;
+    EUSCI_B1->CTLW0 |= EUSCI_B_CTLW0_TXSTP;
 
     return true;
 }
 
-bool i2c_read(uint8_t slave_address, uint8_t reg,  uint8_t *data, uint32_t size)
+bool i2c_dev_read(uint8_t slave_address, uint8_t reg,  uint8_t *data, uint32_t size)
 {
-    EUSCI_B0->I2CSA = slave_address;
+    EUSCI_B1->I2CSA = slave_address;
 
     /*SEND REGISTER BYTE*/
     //Sent start condition
-    EUSCI_B0->CTLW0 |=  EUSCI_B_CTLW0_TR |   //I2C transmit
+    EUSCI_B1->CTLW0 |=  EUSCI_B_CTLW0_TR |   //I2C transmit
                         EUSCI_B_CTLW0_TXSTT; //Start condition
 
     //Poll for transmit interrupt flag and start condition flag
-    while((EUSCI_B0->CTLW0 & EUSCI_B_CTLW0_TXSTT) || !(EUSCI_B0->IFG & EUSCI_B_IFG_TXIFG0));
+    while((EUSCI_B1->CTLW0 & EUSCI_B_CTLW0_TXSTT) || !(EUSCI_B1->IFG & EUSCI_B_IFG_TXIFG0));
     //Send register value
-    EUSCI_B0->TXBUF = reg;
+    EUSCI_B1->TXBUF = reg;
     //Poll for transmission
-    while(!(EUSCI_B0->IFG & EUSCI_B_IFG_TXIFG0));
+    while(!(EUSCI_B1->IFG & EUSCI_B_IFG_TXIFG0));
 
     /*START RECEIVE DATA*/
-    EUSCI_B0->CTLW0 &=  ~EUSCI_B_CTLW0_TR;  //I2C receive
-    EUSCI_B0->CTLW0 |= EUSCI_B_CTLW0_TXSTT; //Start condition
+    EUSCI_B1->CTLW0 &=  ~EUSCI_B_CTLW0_TR;  //I2C receive
+    EUSCI_B1->CTLW0 |= EUSCI_B_CTLW0_TXSTT; //Start condition
 
     //Poll for start condition flag
-    while(EUSCI_B0->CTLW0 & EUSCI_B_CTLW0_TXSTT);
+    while(EUSCI_B1->CTLW0 & EUSCI_B_CTLW0_TXSTT);
 
     uint32_t i;
     for(i = 0; i < size - 1; i++)
     {
-        while(!(EUSCI_B0->IFG & EUSCI_B_IFG_RXIFG0));
-        data[i] = EUSCI_B0->RXBUF & EUSCI_B_RXBUF_RXBUF_MASK;
+        while(!(EUSCI_B1->IFG & EUSCI_B_IFG_RXIFG0));
+        data[i] = EUSCI_B1->RXBUF & EUSCI_B_RXBUF_RXBUF_MASK;
     }
 
     //Send stop condition
-    EUSCI_B0->CTLW0 |= EUSCI_B_CTLW0_TXSTP;
+    EUSCI_B1->CTLW0 |= EUSCI_B_CTLW0_TXSTP;
     //Poll stop condition
-    while(EUSCI_B0->CTLW0 & EUSCI_B_CTLW0_TXSTP);
+    while(EUSCI_B1->CTLW0 & EUSCI_B_CTLW0_TXSTP);
     //Poll RX flag
-    while(!(EUSCI_B0->IFG & EUSCI_B_IFG_RXIFG0));
+    while(!(EUSCI_B1->IFG & EUSCI_B_IFG_RXIFG0));
     //Read last data byte
-    data[i] = EUSCI_B0->RXBUF & EUSCI_B_RXBUF_RXBUF_MASK;
+    data[i] = EUSCI_B1->RXBUF & EUSCI_B_RXBUF_RXBUF_MASK;
 
     return true;
-}
-
-//TODO: Move this to a different file!
-void delay(int ms)
-{
-    while(ms--)
-    {
-        __delay_cycles(1200);
-    }
-
 }
 
 #else

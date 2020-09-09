@@ -11,8 +11,8 @@ hal_main.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/mac
 hal_main.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/machine/_stdint.h
 hal_main.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/sys/_stdint.h
 hal_main.obj: ../GPS.h
-hal_main.obj: ../BME280.h
 hal_main.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/stdbool.h
+hal_main.obj: ../BME280.h
 hal_main.obj: ../UARTDEBUG.h
 hal_main.obj: ../madgwick.h
 hal_main.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/posix/ccs/unistd.h
@@ -45,8 +45,8 @@ C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/machine/_types.h:
 C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/machine/_stdint.h: 
 C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/sys/_stdint.h: 
 ../GPS.h: 
-../BME280.h: 
 C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/stdbool.h: 
+../BME280.h: 
 ../UARTDEBUG.h: 
 ../madgwick.h: 
 C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/posix/ccs/unistd.h: 

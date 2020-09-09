@@ -58,6 +58,11 @@ extern "C" {
  *  XDS110 UART
  */
 #define CONFIG_UART_0               0
+/*
+ *  TX: P3.3
+ *  RX: P3.2
+ */
+#define CONFIG_UART_1               1
 
 
 /*

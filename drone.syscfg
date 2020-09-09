@@ -16,6 +16,7 @@ const Power     = scripting.addModule("/ti/drivers/Power");
 const RTOS      = scripting.addModule("/ti/drivers/RTOS");
 const UART      = scripting.addModule("/ti/drivers/UART");
 const UART1     = UART.addInstance();
+const UART2     = UART.addInstance();
 
 /**
  * Write custom configuration values to the imported modules.
@@ -37,6 +38,13 @@ UART1.$name      = "CONFIG_UART_0";
 UART1.$hardware  = system.deviceData.board.components.XDS110UART;
 UART1.baudRates  = [9600,115200];
 UART1.uart.$name = "MyUART1";
+
+UART2.$name              = "CONFIG_UART_1";
+UART2.baudRates          = [9600,115200];
+UART2.uart.$name         = "MyUART1";
+UART2.uart.$assign       = "EUSCI_A2";
+UART2.uart.txPin.$assign = "boosterpack.4";
+UART2.uart.rxPin.$assign = "boosterpack.3";
 
 /**
  * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future

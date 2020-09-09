@@ -4,9 +4,9 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-//#define MSP432P401R_RTOS_I2C
+#define MSP432P401R_RTOS_I2C
 //#define MSP432P401R_DRIVERLIB_I2C
-#define MSP432P401R_DRA_I2C
+//#define MSP432P401R_DRA_I2C
 
 #define I2C_DEV_100KHZ      100000
 #define I2C_DEV_400KHZ      400000

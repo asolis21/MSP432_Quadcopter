@@ -4,6 +4,11 @@
 /* EUSCI_A0
  * P1.2 -> RX
  * P1.3 -> TX
+ *
+ * EUSCI_A2
+ * P3.2 -> RX
+ * P3.3 -> TX
+ *
  */
 
 #ifdef MSP432P401R_RTOS_UART
@@ -11,38 +16,45 @@
 #include <ti/drivers/UART.h>
 #include "ti_drivers_config.h"
 
-UART_Handle uart_console;
+bool uart_open[UART_COUNT] = {false, false};
+UART_Handle UART_handles[UART_COUNT];
 
-void uart_dev_init(int fclock, int baudrate)
+void uart_dev_init(uint32_t index, int fclock, int baudrate)
 {
+    if(uart_open[index]) return;
+
     UART_init();
 
-    UART_Params UART0_Config;
+    UART_Params UART_Config;
 
-    UART_Params_init(&UART0_Config);
-    UART0_Config.baudRate = baudrate;
-    UART0_Config.readMode = UART_MODE_BLOCKING;
-    UART0_Config.writeMode = UART_MODE_BLOCKING;
-    UART0_Config.readTimeout = UART_WAIT_FOREVER;
-    UART0_Config.writeTimeout = UART_WAIT_FOREVER;
-    UART0_Config.dataLength = UART_LEN_8;
+    UART_Params_init(&UART_Config);
+    UART_Config.baudRate = baudrate;
+    UART_Config.readMode = UART_MODE_BLOCKING;
+    UART_Config.writeMode = UART_MODE_BLOCKING;
+    UART_Config.readTimeout = UART_WAIT_FOREVER;
+    UART_Config.writeTimeout = UART_WAIT_FOREVER;
+    UART_Config.dataLength = UART_LEN_8;
 
-    uart_console = UART_open(CONFIG_UART_0, &UART0_Config);
-    if (uart_console == NULL)
+    uint32_t config_uart = (index == 0) ? CONFIG_UART_0 : CONFIG_UART_1;
+
+    UART_handles[index] = UART_open(config_uart, &UART_Config);
+    if (UART_handles[index] == NULL)
     {
         while(1);
     }
+
+    uart_open[index] = true;
 }
 
-void print_char(char c)
+void uart_dev_print_char(uint32_t index, char c)
 {
-    UART_write(uart_console, (uint8_t*)&c, 1);
+    UART_write(UART_handles[index], (uint8_t*)&c, 1);
 }
 
-char get_char(void)
+char uart_dev_get_char(uint32_t index)
 {
     char c;
-    UART_read(uart_console, (uint8_t*)&c, 1);
+    UART_read(UART_handles[index], (uint8_t*)&c, 1);
 
     return c;
 }
@@ -74,7 +86,7 @@ void uart_dev_init(int fclock, int baudrate)
 
     //TODO: Find a better way to compute UCBRF and UCBRS values, THIS DOES NOT WORK!
     uart_config.clockPrescalar = UCBR;
-    uart_config.firstModReg = UCBRF;
+    uart_config.firstModReg = (UCBRF << EUSCI_A_MCTLW_BRF_OFS);
     uart_config.secondModReg = 0;
 
     GPIO_setAsPeripheralModuleFunctionInputPin(GPIO_PORT_P1, GPIO_PIN2 | GPIO_PIN3, GPIO_PRIMARY_MODULE_FUNCTION);

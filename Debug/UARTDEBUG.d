@@ -1,9 +1,9 @@
 # FIXED
 
 UARTDEBUG.obj: ../UARTDEBUG.c
-UARTDEBUG.obj: C:/Users/amartinezacosta/workspace_v9/HAL/peripheral/uart_dev.h
 UARTDEBUG.obj: ../UARTDEBUG.h
 UARTDEBUG.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/stdbool.h
+UARTDEBUG.obj: ../peripheral/uart_dev.h
 UARTDEBUG.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/stdint.h
 UARTDEBUG.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/_stdint40.h
 UARTDEBUG.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/sys/stdint.h
@@ -15,9 +15,9 @@ UARTDEBUG.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/sy
 UARTDEBUG.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/stdarg.h
 
 ../UARTDEBUG.c: 
-C:/Users/amartinezacosta/workspace_v9/HAL/peripheral/uart_dev.h: 
 ../UARTDEBUG.h: 
 C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/stdbool.h: 
+../peripheral/uart_dev.h: 
 C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/stdint.h: 
 C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/_stdint40.h: 
 C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/sys/stdint.h: 

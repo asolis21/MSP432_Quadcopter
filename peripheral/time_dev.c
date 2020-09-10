@@ -41,12 +41,7 @@ void time_dev_init(uint32_t fclock)
 
 void delay(uint32_t ms)
 {
-    uint32_t start = millis();
-
-    while((millis()-start) < ms)
-    {
-        usleep(100);
-    }
+    usleep(1000*ms);
 }
 
 uint32_t millis(void)

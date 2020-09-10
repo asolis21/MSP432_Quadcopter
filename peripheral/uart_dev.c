@@ -33,6 +33,7 @@ void uart_dev_init(uint32_t index, int fclock, int baudrate)
     UART_Config.writeMode = UART_MODE_BLOCKING;
     UART_Config.readTimeout = UART_WAIT_FOREVER;
     UART_Config.writeTimeout = UART_WAIT_FOREVER;
+    UART_Config.readEcho = UART_ECHO_OFF;
     UART_Config.dataLength = UART_LEN_8;
 
     uint32_t config_uart = (index == 0) ? CONFIG_UART_0 : CONFIG_UART_1;
@@ -48,7 +49,9 @@ void uart_dev_init(uint32_t index, int fclock, int baudrate)
 
 void uart_dev_print_char(uint32_t index, char c)
 {
-    UART_write(UART_handles[index], (uint8_t*)&c, 1);
+    UART_Handle *handle = &UART_handles[index];
+
+    UART_write(*handle, (uint8_t*)&c, 1);
 }
 
 char uart_dev_get_char(uint32_t index)
@@ -78,7 +81,7 @@ eUSCI_UART_ConfigV1 uart_config =
         EUSCI_A_UART_8_BIT_LEN                  // 8 bit data length
 };
 
-void uart_dev_init(int fclock, int baudrate)
+void uart_dev_init(uint32_t index, int fclock, int baudrate)
 {
     uint32_t N = fclock/baudrate;
     uint32_t UCBR = N/16;
@@ -94,12 +97,12 @@ void uart_dev_init(int fclock, int baudrate)
     UART_enableModule(EUSCI_A0_BASE);
 }
 
-void print_char(char c)
+void uart_dev_print_char(uint32_t index, char c)
 {
     UART_transmitData(EUSCI_A0_BASE, (uint8_t)c);
 }
 
-char get_char(void)
+char uart_dev_get_char(uint32_t index)
 {
     return UART_receiveData(EUSCI_A0_BASE);
 }
@@ -109,7 +112,7 @@ char get_char(void)
 #define __MSP432P401R__
 #include <ti/devices/msp432p4xx/inc/msp.h>
 
-void uart_dev_init(int fclock, int baudrate)
+void uart_dev_init(uint32_t index, int fclock, int baudrate)
 {
     P1->SEL0 |= (BIT2|BIT3);
     P1->SEL1 &= ~(BIT2|BIT3);
@@ -125,13 +128,13 @@ void uart_dev_init(int fclock, int baudrate)
     EUSCI_A0->CTLW0 &= ~EUSCI_A_CTLW0_SWRST;
 }
 
-void print_char(char c)
+void uart_dev_print_char(uint32_t index, char c)
 {
     while(!(EUSCI_A0->IFG & EUSCI_A_IFG_TXIFG));
     EUSCI_A0->TXBUF = c;
 }
 
-char get_char(void)
+char uart_dev_get_char(uint32_t index)
 {
     char c;
     while(!(EUSCI_A0->IFG & EUSCI_A_IFG_RXIFG));
@@ -143,17 +146,17 @@ char get_char(void)
 #else
 #warning USING UN-IMPLEMENTED UART COMMUNICATION, YOU MUST PROVIDE YOUR OWN SPECIFIC UART INTERFACE
 
-void uart_dev_init(int fclock, int baudrate)
+void uart_dev_init(uint32_t index, int fclock, int baudrate)
 {
 
 }
 
-void print_char(char c)
+void uart_dev_print_char(uint32_t index, char c)
 {
 
 }
 
-char get_char(void)
+char uart_dev_get_char(uint32_t index)
 {
 
 }

@@ -11,10 +11,12 @@
 #include <servo.h>
 #include <time.h>
 
+#define SMCLK_FREQUENCY     12000000;
+
 void *mainThread(void *arg0)
 {
-    time_dev_init(12000000);
-    UARTDEBUG_init(12000000, 9600);
+    time_dev_init(SMCLK_FREQUENCY);
+    UARTDEBUG_init(SMCLK_FREQUENCY, 9600);
     MPU9250_init();
     BME280_init();
     GPS_init();
@@ -52,15 +54,7 @@ void *mainThread(void *arg0)
 
         GPS_read();
 
-        Madgwick_quaternion_update(-accel[0], accel[1], accel[2],
-                                    gyro[0], -gyro[1], -gyro[2],
-                                    mag[0],  -mag[1],   mag[2], dt);
-
-        Madgwick_quaternion_angles(&pitch, &roll, &yaw);
-
         dt = (millis() - start)/1e3;
-
-        UARTDEBUG_printf("pitch = %f, roll = %f, yaw = %f, altitude = %f\r\n", pitch, roll, yaw, altitude);
 
         usleep(100000);
     }

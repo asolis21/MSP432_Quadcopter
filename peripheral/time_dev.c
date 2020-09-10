@@ -45,7 +45,7 @@ void delay(uint32_t ms)
 
     while((millis()-start) < ms)
     {
-        usleep(1000);
+        usleep(100);
     }
 }
 

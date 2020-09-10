@@ -4,7 +4,6 @@
 
 #include <math.h>
 
-
 //Based on Kriswner and Betaflight
 
 /*CALIBRATION DATA*/
@@ -284,7 +283,6 @@ void MPU9250_calibrate_accelerometer(void)
 
 void AK8963_calibrate_magnetometer(void)
 {
-
     int16_t raw_data[3];
     int16_t mag_max[] = {-32767, -32767, -32767};
     int16_t mag_min[] = { 32767,  32767,  32767};

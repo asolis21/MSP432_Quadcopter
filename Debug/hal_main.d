@@ -15,6 +15,7 @@ hal_main.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/std
 hal_main.obj: ../BME280.h
 hal_main.obj: ../UARTDEBUG.h
 hal_main.obj: ../madgwick.h
+hal_main.obj: ../peripheral/time_dev.h
 hal_main.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/posix/ccs/unistd.h
 hal_main.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/posix/ccs/sys/types.h
 hal_main.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/stddef.h
@@ -49,6 +50,7 @@ C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/stdbool.h:
 ../BME280.h: 
 ../UARTDEBUG.h: 
 ../madgwick.h: 
+../peripheral/time_dev.h: 
 C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/posix/ccs/unistd.h: 
 C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/posix/ccs/sys/types.h: 
 C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/stddef.h: 

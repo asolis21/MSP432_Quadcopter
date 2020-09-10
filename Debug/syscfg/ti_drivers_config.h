@@ -49,6 +49,12 @@ extern "C" {
 
 
 /*
+ *  ======== Timer ========
+ */
+
+#define CONFIG_TIMER_0              0
+
+/*
  *  ======== UART ========
  */
 

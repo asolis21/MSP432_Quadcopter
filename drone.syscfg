@@ -14,6 +14,8 @@ const I2C       = scripting.addModule("/ti/drivers/I2C");
 const I2C1      = I2C.addInstance();
 const Power     = scripting.addModule("/ti/drivers/Power");
 const RTOS      = scripting.addModule("/ti/drivers/RTOS");
+const Timer     = scripting.addModule("/ti/drivers/Timer", {}, false);
+const Timer1    = Timer.addInstance();
 const UART      = scripting.addModule("/ti/drivers/UART");
 const UART1     = UART.addInstance();
 const UART2     = UART.addInstance();
@@ -33,6 +35,11 @@ Power.performanceLevel1.$name = "ti_drivers_power_PowerMSP432PerfLevels2";
 Power.performanceLevel0.$name = "ti_drivers_power_PowerMSP432PerfLevels3";
 
 RTOS.name = "FreeRTOS";
+
+Timer1.$name         = "CONFIG_TIMER_0";
+Timer1.timerType     = "32 Bits";
+Timer1.timer.$name   = "MyTIMER321";
+Timer1.timer.$assign = "TIMER32_0";
 
 UART1.$name      = "CONFIG_UART_0";
 UART1.$hardware  = system.deviceData.board.components.XDS110UART;

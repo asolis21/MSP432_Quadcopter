@@ -1,9 +1,10 @@
 #include "MPU9250.h"
 #include "GPS.h"
 #include "BME280.h"
-
 #include "UARTDEBUG.h"
 #include "madgwick.h"
+
+#include "peripheral/time_dev.h"
 
 #include <unistd.h>
 #include <math.h>
@@ -12,6 +13,7 @@
 
 void *mainThread(void *arg0)
 {
+    time_dev_init(12000000);
     UARTDEBUG_init(12000000, 9600);
     MPU9250_init();
     BME280_init();
@@ -36,16 +38,12 @@ void *mainThread(void *arg0)
     float pitch, roll, yaw;
     float altitude;
 
-    struct timespec t0, t1;
-    t0.tv_nsec = 0;
-    clock_gettime(CLOCK_MONOTONIC, &t1);
+    uint32_t start;
+    float dt = 0.0;
 
     while(1)
     {
-        t0.tv_nsec = t1.tv_nsec;
-        clock_gettime(CLOCK_MONOTONIC, &t1);
-        float dt = (t1.tv_nsec - t0.tv_nsec)/1e9;
-        dt = dt < 0 ? (1 + dt) : dt;
+        start = millis();
 
         MPU9250_accelerometer(accel);
         MPU9250_gyroscope(gyro);
@@ -60,7 +58,7 @@ void *mainThread(void *arg0)
 
         Madgwick_quaternion_angles(&pitch, &roll, &yaw);
 
-
+        dt = (millis() - start)/1e3;
 
         UARTDEBUG_printf("pitch = %f, roll = %f, yaw = %f, altitude = %f\r\n", pitch, roll, yaw, altitude);
 

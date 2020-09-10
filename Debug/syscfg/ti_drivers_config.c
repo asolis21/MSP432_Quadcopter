@@ -97,6 +97,50 @@ const PowerMSP432_ConfigV1 PowerMSP432_config = {
 
 
 /*
+ *  =============================== Timer ===============================
+ */
+
+#include <ti/drivers/Timer.h>
+#include <ti/drivers/timer/TimerMSP432.h>
+#include <ti/devices/msp432p4xx/driverlib/interrupt.h>
+#include <ti/devices/msp432p4xx/driverlib/timer_a.h>
+#include <ti/devices/msp432p4xx/driverlib/timer32.h>
+
+#define CONFIG_TIMER_COUNT 1
+
+/*
+ *  ======== timerMSP432Objects ========
+ */
+TimerMSP432_Object timerMSP432Objects[CONFIG_TIMER_COUNT];
+
+/*
+ *  ======== timerMSP432HWAttrs ========
+ */
+const TimerMSP432_HWAttrs TimerMSP432HWAttrs[CONFIG_TIMER_COUNT] = {
+    /* CONFIG_TIMER_0 */
+    {
+        .timerBaseAddress  = TIMER32_0_BASE,
+        .intNum            = INT_T32_INT1,
+        .intPriority       = (~0),
+    },
+};
+
+/*
+ *  ======== Timer_config ========
+ */
+const Timer_Config Timer_config[CONFIG_TIMER_COUNT] = {
+    /* CONFIG_TIMER_0 */
+    {
+        .fxnTablePtr = &TimerMSP432_Timer32_fxnTable,
+        .object      = &timerMSP432Objects[CONFIG_TIMER_0],
+        .hwAttrs     = &TimerMSP432HWAttrs[CONFIG_TIMER_0]
+    },
+};
+
+const uint_least8_t Timer_count = CONFIG_TIMER_COUNT;
+
+
+/*
  *  =============================== UART ===============================
  */
 

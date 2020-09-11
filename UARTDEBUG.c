@@ -31,6 +31,7 @@ void PrintInteger(int integer)
     if(integer < 0)
     {
         uart_dev_print_char(UART0, '-');
+        integer = -integer;
     }
 
     char b[10];

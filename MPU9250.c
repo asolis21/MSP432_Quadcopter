@@ -1,6 +1,6 @@
 #include "MPU9250.h"
-#include "peripheral/i2c_dev.h"
-#include "peripheral/time_dev.h"
+#include "EasyHal/i2c_dev.h"
+#include "EasyHal/time_dev.h"
 
 #include <math.h>
 
@@ -23,7 +23,7 @@ static float gyro_sca;
 
 void MPU9250_init(void)
 {
-    i2c_dev_init(12000000, I2C_DEV_400KHZ);
+    i2c_dev_init(I2C_DEV_400KHZ);
     MPU9250_write_byte(PWR_MGMT_1, 0x00);
     delay(100);
 

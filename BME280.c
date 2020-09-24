@@ -1,7 +1,7 @@
 #include "BME280.h"
 #include <math.h>
-#include "peripheral/i2c_dev.h"
-#include "peripheral/time_dev.h"
+#include "EasyHal/i2c_dev.h"
+#include "EasyHal/time_dev.h"
 
 //Based on Adafruit and Sparkfun libraries
 
@@ -36,7 +36,7 @@ uint16_t BME280_read_uint16(uint8_t reg);
 
 void BME280_init(void)
 {
-    i2c_dev_init(12000000, I2C_DEV_400KHZ);
+    i2c_dev_init(I2C_DEV_400KHZ);
 
     //reset device
     BME280_write_uint8(BME280_REGISTER_SOFTRESET, 0xB6);
@@ -49,7 +49,6 @@ void BME280_init(void)
     }
 
     BME280_coefficients();
-    //BME280_sampling();
     BME280_standby(STANDBY_MS_0_5);
     BME280_filter(FILTER_OFF);
     BME280_temperature_sampling(SAMPLING_X1);

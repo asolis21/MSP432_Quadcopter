@@ -36,6 +36,11 @@ main.obj: C:/FreeRTOSv10.3.1/FreeRTOS/Source/include/mpu_wrappers.h
 main.obj: C:/FreeRTOSv10.3.1/FreeRTOS/Source/include/task.h
 main.obj: C:/FreeRTOSv10.3.1/FreeRTOS/Source/include/list.h
 main.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/Board.h
+main.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/UART.h
+main.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/I2C.h
+main.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/stdbool.h
+main.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/Timer.h
+main.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/SPI.h
 
 ../main.c: 
 C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/stdint.h: 
@@ -73,3 +78,8 @@ C:/FreeRTOSv10.3.1/FreeRTOS/Source/include/mpu_wrappers.h:
 C:/FreeRTOSv10.3.1/FreeRTOS/Source/include/task.h: 
 C:/FreeRTOSv10.3.1/FreeRTOS/Source/include/list.h: 
 C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/Board.h: 
+C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/UART.h: 
+C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/I2C.h: 
+C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/stdbool.h: 
+C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/Timer.h: 
+C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/SPI.h: 

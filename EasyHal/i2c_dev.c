@@ -1,4 +1,5 @@
-#include <peripheral/i2c_dev.h>
+#include "i2c_dev.h"
+#include "config_dev.h"
 
 /*--------------------LOW LEVEL I2C HARDWARE IMPLEMENTATION, DEVICE SPECIFIC--------------------*/
 /* EUSCI_B1
@@ -7,6 +8,10 @@
  */
 #ifdef MSP432P401R_RTOS_I2C
 
+/*WARNING! DO NOT COMPILE THIS ON A DRA OR DRIVERLIB PROJECT!
+ * COMPILATION WILL MOST LIKELY FAIL!
+ */
+
 #include <unistd.h>
 #include <ti/drivers/I2C.h>
 #include "ti_drivers_config.h"
@@ -14,10 +19,9 @@
 I2C_Handle MPU9250_handle;
 bool i2c_initialized = false;
 
-void i2c_dev_init(uint32_t fclock, uint32_t i2c_clock)
+void i2c_dev_init(uint32_t i2c_clock)
 {
     if(i2c_initialized) return;
-    I2C_init();
 
     I2C_Params params;
     I2C_Params_init(&params);
@@ -74,7 +78,10 @@ bool i2c_dev_read(uint8_t slave_address, uint8_t reg, uint8_t *data, uint32_t si
 
 #elif defined(MSP432P401R_DRIVERLIB_I2C)
 
-#define __MSP432P401R__
+/*WARNING! DO NOT COMPILE THIS ON A DRA OR RTOS PROJECT!
+ * COMPILATION WILL MOST LIKELY FAIL!
+ */
+
 #include <ti/devices/msp432p4xx/driverlib/driverlib.h>
 
 bool i2c_initialized = false;
@@ -82,17 +89,17 @@ bool i2c_initialized = false;
 eUSCI_I2C_MasterConfig i2c_config =
 {
     EUSCI_B_I2C_CLOCKSOURCE_SMCLK,          // SMCLK Clock Source
-    12000000,                               // SMCLK = 12MHz
-    EUSCI_B_I2C_SET_DATA_RATE_400KBPS,      // Desired I2C Clock of 400khz
+    0,                                      // Will be modified later
+    0,                                      // Will be modified later
     0,                                      // No byte counter threshold
     EUSCI_B_I2C_NO_AUTO_STOP                // No Autostop
 };
 
-void i2c_dev_init(uint32_t fclock, uint32_t i2c_clock)
+void i2c_dev_init(uint32_t i2c_clock)
 {
     if(i2c_initialized) return;
 
-    i2c_config.i2cClk = fclock;
+    i2c_config.i2cClk = SMCLK_DEV_FREQUENCY;
     i2c_config.dataRate = i2c_clock;
 
     GPIO_setAsPeripheralModuleFunctionInputPin(GPIO_PORT_P6, GPIO_PIN4 | GPIO_PIN5, GPIO_PRIMARY_MODULE_FUNCTION);
@@ -104,17 +111,22 @@ void i2c_dev_init(uint32_t fclock, uint32_t i2c_clock)
 
 bool i2c_dev_write(uint8_t slave_adddress, uint8_t *data, uint32_t size)
 {
+    //Wait for last transaction to finish
     while (I2C_masterIsStopSent(EUSCI_B1_BASE));
+    //Set slave address
     I2C_setSlaveAddress(EUSCI_B1_BASE, slave_adddress);
 
+    //Send start condition
     I2C_masterSendMultiByteStart(EUSCI_B1_BASE, data[0]);
 
     uint32_t i;
     for(i = 1; i < size - 1; i++)
     {
+        //Poll for data to be sent
         I2C_masterSendMultiByteNext(EUSCI_B1_BASE, data[i]);
     }
 
+    //Send stop condition
     I2C_masterSendMultiByteFinish(EUSCI_B1_BASE, data[i]);
 
     return true;
@@ -122,20 +134,27 @@ bool i2c_dev_write(uint8_t slave_adddress, uint8_t *data, uint32_t size)
 
 bool i2c_dev_read(uint8_t slave_adddress, uint8_t reg, uint8_t *data, uint32_t size)
 {
+    //Set slave address
     I2C_setSlaveAddress(EUSCI_B1_BASE, slave_adddress);
+    //Send start condition
     I2C_masterSendMultiByteStart(EUSCI_B1_BASE, reg);
+    //Poll for byte sent
     while(!(EUSCI_B1->IFG & EUSCI_B_IFG_TXIFG0));
 
+    //Send start and receive condition
     I2C_masterReceiveStart(EUSCI_B1_BASE);
 
+    //Poll for start condition
     while(I2C_masterIsStartSent(EUSCI_B1_BASE));
 
     uint32_t i;
     for(i = 0; i < size - 1; i++)
     {
+        //Poll for receive data
         data[i] = I2C_masterReceiveSingle(EUSCI_B1_BASE);
     }
 
+    //Send stop condition and receive last byte
     data[i] = I2C_masterReceiveMultiByteFinish(EUSCI_B1_BASE);
 
     return true;
@@ -143,12 +162,17 @@ bool i2c_dev_read(uint8_t slave_adddress, uint8_t reg, uint8_t *data, uint32_t s
 
 #elif defined(MSP432P401R_DRA_I2C)
 
-#define __MSP432P401R__
-#include <ti/devices/msp432p4xx/inc/msp.h>
+#include "msp.h"
 
+/*WARNING! DO NOT COMPILE THIS ON A DRIVERLIB OR RTOS PROJECT!
+ * COMPILATION WILL MOST LIKELY FAIL!
+ */
+
+//TODO: Add a timeout for the I2C connection? It should return true or false if the
+//data was sent/received
 bool i2c_initialized = false;
 
-void i2c_dev_init(uint32_t fclock, uint32_t i2c_clock)
+void i2c_dev_init(uint32_t i2c_clock)
 {
     if(i2c_initialized) return;
 
@@ -161,7 +185,7 @@ void i2c_dev_init(uint32_t fclock, uint32_t i2c_clock)
                        EUSCI_B_CTLW0_SYNC   |       //Sync mode
                        EUSCI_B_CTLW0_SSEL__SMCLK;   //SMCLK
 
-    EUSCI_B1->BRW = fclock/i2c_clock;                             //SMCLK/30 = 100KHz
+    EUSCI_B1->BRW = SMCLK_DEV_FREQUENCY/i2c_clock;
 
     EUSCI_B1->CTLW0 &= ~EUSCI_A_CTLW0_SWRST;
 

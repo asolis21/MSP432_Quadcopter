@@ -49,6 +49,20 @@ extern "C" {
 
 
 /*
+ *  ======== PWM ========
+ */
+
+/* P2.4 */
+#define CONFIG_PWM_0                0
+/* P2.5 */
+#define CONFIG_PWM_1                1
+/* P2.6 */
+#define CONFIG_PWM_2                2
+/* P2.7 */
+#define CONFIG_PWM_3                3
+
+
+/*
  *  ======== Timer ========
  */
 

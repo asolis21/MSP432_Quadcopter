@@ -1,8 +1,13 @@
 #include "time_dev.h"
+#include "config_dev.h"
 
-//TODO: Implement millis
+//TODO: Implement micros? delay_microseconds?
 
 #ifdef MSP432P401R_RTOS_TIME
+
+/*WARNING! DO NOT COMPILE THIS ON A DRA OR DRIVERLIB PROJECT!
+ * COMPILATION WILL MOST LIKELY FAIL!
+ */
 
 #include <ti/drivers/Timer.h>
 #include <unistd.h>
@@ -12,11 +17,12 @@
 Timer_Handle timer;
 volatile uint32_t timer_millis = 0;
 
+bool timer_open = false;
 void timer_dev_callback(Timer_Handle handle);
 
-void time_dev_init(uint32_t fclock)
+void time_dev_init(void)
 {
-    Timer_init();
+    if(timer_open) return;
 
     Timer_Params params;
     Timer_Params_init(&params);
@@ -37,6 +43,8 @@ void time_dev_init(uint32_t fclock)
         //Failed to start timer
         while(1);
     }
+
+    timer_open = true;
 }
 
 void delay(uint32_t ms)
@@ -56,23 +64,28 @@ void timer_dev_callback(Timer_Handle handle)
 
 #elif defined(MSP432P401R_DRIVERLIB_TIME)
 
-#define __MSP432P401R__
+/*WARNING! DO NOT COMPILE THIS ON A DRA OR RTOS PROJECT!
+ * COMPILATION WILL MOST LIKELY FAIL!
+ */
+
+#include <EasyHal/config_dev.h>
 #include <ti/devices/msp432p4xx/driverlib/driverlib.h>
 
 volatile uint32_t timer_millis = 0;
 
-void time_dev_init(uint32_t fclock)
+void time_dev_init(void)
 {
     Timer32_initModule(TIMER32_BASE, TIMER32_PRESCALER_1, TIMER32_32BIT, TIMER32_PERIODIC_MODE);
-    Timer32_setCount(TIMER32_BASE, fclock/1000);
+    Timer32_setCount(TIMER32_BASE, (SMCLK_DEV_FREQUENCY/1000) - 1);
 
     /* Enabling interrupts */
-    Interrupt_enableInterrupt(INT_PORT1);
     Interrupt_enableInterrupt(INT_T32_INT1);
     Interrupt_enableMaster();
+
+    Timer32_startTimer(TIMER32_BASE, true);
 }
 
-void delay(int ms)
+void delay(uint32_t ms)
 {
     uint32_t start = millis();
 
@@ -89,27 +102,35 @@ uint32_t millis(void)
 
 void T32_INT1_IRQHandler(void)
 {
+    Timer32_clearInterruptFlag(TIMER32_BASE);
     timer_millis++;
 }
 
 #elif defined(MSP432P401R_DRA_TIME)
 
-#define __MSP432P401R__
-#include <ti/devices/msp432p4xx/inc/msp.h>
+/*WARNING! DO NOT COMPILE THIS ON A DRIVERLIB OR RTOS PROJECT!
+ * COMPILATION WILL MOST LIKELY FAIL!
+ */
 
+#include "msp.h"
+
+bool timer_open = false;
 volatile uint32_t timer_millis = 0;
 
-void time_dev_init(uint32_t fclock)
+void time_dev_init(void)
 {
+    if(timer_open) return;
     TIMER32_1->CONTROL = TIMER32_CONTROL_SIZE | TIMER32_CONTROL_MODE;
-    TIMER32_1->LOAD = fclock/1000;
+    TIMER32_1->LOAD = (SMCLK_DEV_FREQUENCY/1000) - 1;
 
     NVIC_EnableIRQ(T32_INT1_IRQn);
 
     TIMER32_1->CONTROL |= TIMER32_CONTROL_ENABLE | TIMER32_CONTROL_IE;
+
+    timer_open = true;
 }
 
-void delay(int ms)
+void delay(uint32_t ms)
 {
     uint32_t start = millis();
 
@@ -126,7 +147,33 @@ uint32_t millis(void)
 
 void T32_INT1_IRQHandler(void)
 {
+    TIMER32_1->INTCLR |= BIT0;
+
     timer_millis++;
+}
+
+#else
+#warning USING UN-IMPLEMENTED TIME, YOU MUST PROVIDE YOUR OWN SPECIFIC TIMER INTERFACE
+
+void time_dev_init(void)
+{
+
+}
+
+void delay(uint32_t ms)
+{
+
+}
+
+uint32_t millis(void)
+{
+    return 0;
+}
+
+//Timer ISR implementation
+void TIMER_ISR(void)
+{
+
 }
 
 #endif

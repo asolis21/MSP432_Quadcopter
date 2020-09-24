@@ -16,8 +16,8 @@ BME280.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/_ti_c
 BME280.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/linkage.h
 BME280.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/_defs.h
 BME280.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/machine/_limits.h
-BME280.obj: ../peripheral/i2c_dev.h
-BME280.obj: ../peripheral/time_dev.h
+BME280.obj: ../EasyHal/i2c_dev.h
+BME280.obj: ../EasyHal/time_dev.h
 
 ../BME280.c: 
 ../BME280.h: 
@@ -35,5 +35,5 @@ C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/_ti_config.h:
 C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/linkage.h: 
 C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/_defs.h: 
 C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/machine/_limits.h: 
-../peripheral/i2c_dev.h: 
-../peripheral/time_dev.h: 
+../EasyHal/i2c_dev.h: 
+../EasyHal/time_dev.h: 

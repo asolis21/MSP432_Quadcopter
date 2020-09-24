@@ -2,6 +2,7 @@
 #define UART_DEBUGGER_H_
 
 #include <stdbool.h>
+#include <stdint.h>
 
 /*
  * Function:  UARTDEBUG_init
@@ -13,7 +14,7 @@
  *
  *  returns: void
  */
-void UARTDEBUG_init(int fclock, int baudrate);
+void UARTDEBUG_init(uint32_t baudrate);
 
 /*
  * Function:  UARTDEBUG_printf

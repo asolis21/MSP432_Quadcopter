@@ -13,6 +13,11 @@ extern void *mainThread(void *arg0);
 /* Stack size in bytes */
 #define THREADSTACKSIZE   1024
 
+#include <ti/drivers/UART.h>
+#include <ti/drivers/I2C.h>
+#include <ti/drivers/Timer.h>
+#include <ti/drivers/SPI.h>
+
 /*
  *  ======== main ========
  */
@@ -25,6 +30,9 @@ int main(void)
 
     /* Call driver init functions */
     Board_init();
+    UART_init();
+    I2C_init();
+    Timer_init();
 
     /* Initialize the attributes structure with default values */
     pthread_attr_init(&attrs);

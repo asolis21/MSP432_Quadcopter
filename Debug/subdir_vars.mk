@@ -14,6 +14,7 @@ SYSCFG_SRCS += \
 C_SRCS += \
 ../BME280.c \
 ../GPS.c \
+../MPU6050.c \
 ../MPU9250.c \
 ../UARTDEBUG.c \
 ./syscfg/ti_drivers_config.c \
@@ -31,6 +32,7 @@ GEN_MISC_DIRS += \
 C_DEPS += \
 ./BME280.d \
 ./GPS.d \
+./MPU6050.d \
 ./MPU9250.d \
 ./UARTDEBUG.d \
 ./syscfg/ti_drivers_config.d \
@@ -42,6 +44,7 @@ C_DEPS += \
 OBJS += \
 ./BME280.obj \
 ./GPS.obj \
+./MPU6050.obj \
 ./MPU9250.obj \
 ./UARTDEBUG.obj \
 ./syscfg/ti_drivers_config.obj \
@@ -60,6 +63,7 @@ GEN_MISC_DIRS__QUOTED += \
 OBJS__QUOTED += \
 "BME280.obj" \
 "GPS.obj" \
+"MPU6050.obj" \
 "MPU9250.obj" \
 "UARTDEBUG.obj" \
 "syscfg\ti_drivers_config.obj" \
@@ -75,6 +79,7 @@ GEN_MISC_FILES__QUOTED += \
 C_DEPS__QUOTED += \
 "BME280.d" \
 "GPS.d" \
+"MPU6050.d" \
 "MPU9250.d" \
 "UARTDEBUG.d" \
 "syscfg\ti_drivers_config.d" \
@@ -89,6 +94,7 @@ GEN_FILES__QUOTED += \
 C_SRCS__QUOTED += \
 "../BME280.c" \
 "../GPS.c" \
+"../MPU6050.c" \
 "../MPU9250.c" \
 "../UARTDEBUG.c" \
 "./syscfg/ti_drivers_config.c" \

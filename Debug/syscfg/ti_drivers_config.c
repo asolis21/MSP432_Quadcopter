@@ -65,6 +65,83 @@ const uint_least8_t I2C_count = CONFIG_I2C_COUNT;
 
 
 /*
+ *  =============================== PWM ===============================
+ */
+
+#include <ti/drivers/PWM.h>
+#include <ti/drivers/pwm/PWMTimerMSP432.h>
+
+/* include MSP432 driverlib definitions */
+#include <ti/devices/msp432p4xx/inc/msp.h>
+#include <ti/devices/msp432p4xx/driverlib/timer_a.h>
+
+#define CONFIG_PWM_COUNT 4
+
+/*
+ *  ======== pwmMSP432Objects ========
+ */
+PWMTimerMSP432_Object pwmTimerMSP432Objects[CONFIG_PWM_COUNT];
+
+/*
+ *  ======== pwmMSP432HWAttrs ========
+ */
+const PWMTimerMSP432_HWAttrsV2 pwmTimerMSP432HWAttrs[CONFIG_PWM_COUNT] = {
+    /* CONFIG_PWM_0 */
+    {
+        .clockSource = TIMER_A_CLOCKSOURCE_SMCLK,
+        .pwmPin = PWMTimerMSP432_P2_4_TA0CCR4A, /* P2_4 */
+    },
+    /* CONFIG_PWM_1 */
+    {
+        .clockSource = TIMER_A_CLOCKSOURCE_SMCLK,
+        .pwmPin = PWMTimerMSP432_P2_5_TA0CCR3A, /* P2_5 */
+    },
+    /* CONFIG_PWM_2 */
+    {
+        .clockSource = TIMER_A_CLOCKSOURCE_SMCLK,
+        .pwmPin = PWMTimerMSP432_P2_6_TA0CCR2A, /* P2_6 */
+    },
+    /* CONFIG_PWM_3 */
+    {
+        .clockSource = TIMER_A_CLOCKSOURCE_SMCLK,
+        .pwmPin = PWMTimerMSP432_P2_7_TA0CCR1A, /* P2_7 */
+    },
+};
+
+/*
+ *  ======== PWM_config ========
+ */
+const PWM_Config PWM_config[CONFIG_PWM_COUNT] = {
+    /* CONFIG_PWM_0 */
+    {
+        .fxnTablePtr = &PWMTimerMSP432_fxnTable,
+        .object = &pwmTimerMSP432Objects[CONFIG_PWM_0],
+        .hwAttrs = &pwmTimerMSP432HWAttrs[CONFIG_PWM_0]
+    },
+    /* CONFIG_PWM_1 */
+    {
+        .fxnTablePtr = &PWMTimerMSP432_fxnTable,
+        .object = &pwmTimerMSP432Objects[CONFIG_PWM_1],
+        .hwAttrs = &pwmTimerMSP432HWAttrs[CONFIG_PWM_1]
+    },
+    /* CONFIG_PWM_2 */
+    {
+        .fxnTablePtr = &PWMTimerMSP432_fxnTable,
+        .object = &pwmTimerMSP432Objects[CONFIG_PWM_2],
+        .hwAttrs = &pwmTimerMSP432HWAttrs[CONFIG_PWM_2]
+    },
+    /* CONFIG_PWM_3 */
+    {
+        .fxnTablePtr = &PWMTimerMSP432_fxnTable,
+        .object = &pwmTimerMSP432Objects[CONFIG_PWM_3],
+        .hwAttrs = &pwmTimerMSP432HWAttrs[CONFIG_PWM_3]
+    },
+};
+
+const uint_least8_t PWM_count = CONFIG_PWM_COUNT;
+
+
+/*
  *  =============================== Power ===============================
  */
 

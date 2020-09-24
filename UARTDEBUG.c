@@ -1,13 +1,17 @@
 #include "UARTDEBUG.h"
-#include "peripheral/uart_dev.h"
+#include "EasyHal/uart_dev.h"
 
 #include <stdint.h>
 #include <stdarg.h>
 
-void UARTDEBUG_init(int fclock, int baudrate)
+void UARTDEBUG_init(uint32_t baudrate)
 {
-    //Let us use UART0 (back-channel UART) to print debugging data
-    uart_dev_init(UART0, fclock, baudrate);
+    uart_dev_init(UART0, baudrate);
+}
+
+void PrintChar(char c)
+{
+    uart_dev_write(UART0, (uint8_t*)&c, 1);
 }
 
 void PrintString(char *string)
@@ -15,7 +19,7 @@ void PrintString(char *string)
     /*while the string is not the null character*/
     while(*string)
     {
-        uart_dev_print_char(UART0, *string);
+        PrintChar(*string);
         string++;
     }
 }
@@ -25,12 +29,12 @@ void PrintInteger(int integer)
 {
     if(integer == 0)
     {
-        uart_dev_print_char(UART0, '0');
+        PrintChar('0');
     }
 
     if(integer < 0)
     {
-        uart_dev_print_char(UART0, '-');
+        PrintChar('-');
         integer = -integer;
     }
 
@@ -46,7 +50,7 @@ void PrintInteger(int integer)
 
     while(i)
     {
-        uart_dev_print_char(UART0, '0' + b[i-1]);
+        PrintChar('0' + b[i-1]);
         i--;
     }
 }
@@ -56,7 +60,7 @@ void PrintFloat(float n, uint8_t decimal_places)
 {
     if (n < 0)
     {
-        uart_dev_print_char(UART0, '-');
+        PrintChar('-');
       n = -n;
     }
 
@@ -112,7 +116,7 @@ void PrintFloat(float n, uint8_t decimal_places)
     // Print the generated string.
     for (; i > 0; i--)
     {
-        uart_dev_print_char(UART0, buf[i-1]);
+        PrintChar(buf[i-1]);
     }
 }
 
@@ -128,7 +132,7 @@ void UARTDEBUG_printf(const char *fs, ...)
     {
         if(*fs != '%')
         {
-            uart_dev_print_char(UART0, *fs);
+            PrintChar(*fs);
             fs++;
         }
         else
@@ -137,7 +141,7 @@ void UARTDEBUG_printf(const char *fs, ...)
             {
             case 'c':
                 i = va_arg(valist, int);
-                uart_dev_print_char(UART0, (char)i);
+                PrintChar((char)i);
                 break;
             case 's':
                 s = va_arg(valist, char*);
@@ -165,7 +169,7 @@ int UARTDEBUG_gets(char *str, int length, bool terminal)
 
     while(1)
     {
-        c = uart_dev_get_char(UART0);
+        uart_dev_read(UART0, (uint8_t*)&c, 1);
 
        /*put a '\n' and '\r' if it fits on the buffer*/
        if((c == '\n') || (c == '\r'))
@@ -211,7 +215,7 @@ int UARTDEBUG_gets(char *str, int length, bool terminal)
 
                if(terminal)
                {
-                   uart_dev_print_char(UART0, c);
+                   PrintChar(c);
                }
            }
            else

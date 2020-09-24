@@ -1,10 +1,10 @@
 #include "GPS.h"
-#include "peripheral/uart_dev.h"
-#include "peripheral/time_dev.h"
+#include "EasyHal/uart_dev.h"
+#include "EasyHal/time_dev.h"
 
 void GPS_init(void)
 {
-    uart_dev_init(UART1, 12000000, 9600);
+    uart_dev_init(UART1, 9600);
 }
 
 uint32_t GPS_read(char *gps_data, uint32_t length)
@@ -15,7 +15,7 @@ uint32_t GPS_read(char *gps_data, uint32_t length)
     //Read until new line received
     while(1)
     {
-        c = uart_dev_get_char(UART1);
+        uart_dev_read(UART1, (uint8_t*)&c, 1);
 
        /*put a '\n' and '\r' if it fits on the buffer*/
        if((c == '\n') || (c == '\r'))
@@ -24,7 +24,7 @@ uint32_t GPS_read(char *gps_data, uint32_t length)
            if((i + 3) < length)
            {
                gps_data[i++] = c;
-               uart_dev_get_char(UART1);
+               uart_dev_read(UART1, (uint8_t*)&c, 1);
                gps_data[i++] = 0;
            }
 

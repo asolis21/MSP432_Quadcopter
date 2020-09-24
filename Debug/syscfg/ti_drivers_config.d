@@ -34,10 +34,13 @@ syscfg/ti_drivers_config.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti
 syscfg/ti_drivers_config.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/devices/msp432p4xx/driverlib/interrupt.h
 syscfg/ti_drivers_config.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/devices/msp432p4xx/driverlib/i2c.h
 syscfg/ti_drivers_config.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/devices/msp432p4xx/driverlib/eusci.h
+syscfg/ti_drivers_config.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/PWM.h
+syscfg/ti_drivers_config.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/pwm/PWMTimerMSP432.h
+syscfg/ti_drivers_config.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/devices/msp432p4xx/driverlib/pmap.h
+syscfg/ti_drivers_config.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/devices/msp432p4xx/driverlib/timer_a.h
 syscfg/ti_drivers_config.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/power/PowerMSP432.h
 syscfg/ti_drivers_config.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/Timer.h
 syscfg/ti_drivers_config.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/timer/TimerMSP432.h
-syscfg/ti_drivers_config.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/devices/msp432p4xx/driverlib/timer_a.h
 syscfg/ti_drivers_config.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/devices/msp432p4xx/driverlib/timer32.h
 syscfg/ti_drivers_config.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/UART.h
 syscfg/ti_drivers_config.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/uart/UARTMSP432.h
@@ -80,10 +83,13 @@ C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/devices/msp432p4xx/inc/system
 C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/devices/msp432p4xx/driverlib/interrupt.h: 
 C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/devices/msp432p4xx/driverlib/i2c.h: 
 C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/devices/msp432p4xx/driverlib/eusci.h: 
+C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/PWM.h: 
+C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/pwm/PWMTimerMSP432.h: 
+C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/devices/msp432p4xx/driverlib/pmap.h: 
+C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/devices/msp432p4xx/driverlib/timer_a.h: 
 C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/power/PowerMSP432.h: 
 C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/Timer.h: 
 C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/timer/TimerMSP432.h: 
-C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/devices/msp432p4xx/driverlib/timer_a.h: 
 C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/devices/msp432p4xx/driverlib/timer32.h: 
 C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/UART.h: 
 C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/uart/UARTMSP432.h: 

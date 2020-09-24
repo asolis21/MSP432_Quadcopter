@@ -16,6 +16,7 @@ C_SRCS += \
 ../GPS.c \
 ../MPU6050.c \
 ../MPU9250.c \
+../QMC5883.c \
 ../UARTDEBUG.c \
 ./syscfg/ti_drivers_config.c \
 ../hal_main.c \
@@ -34,6 +35,7 @@ C_DEPS += \
 ./GPS.d \
 ./MPU6050.d \
 ./MPU9250.d \
+./QMC5883.d \
 ./UARTDEBUG.d \
 ./syscfg/ti_drivers_config.d \
 ./hal_main.d \
@@ -46,6 +48,7 @@ OBJS += \
 ./GPS.obj \
 ./MPU6050.obj \
 ./MPU9250.obj \
+./QMC5883.obj \
 ./UARTDEBUG.obj \
 ./syscfg/ti_drivers_config.obj \
 ./hal_main.obj \
@@ -65,6 +68,7 @@ OBJS__QUOTED += \
 "GPS.obj" \
 "MPU6050.obj" \
 "MPU9250.obj" \
+"QMC5883.obj" \
 "UARTDEBUG.obj" \
 "syscfg\ti_drivers_config.obj" \
 "hal_main.obj" \
@@ -81,6 +85,7 @@ C_DEPS__QUOTED += \
 "GPS.d" \
 "MPU6050.d" \
 "MPU9250.d" \
+"QMC5883.d" \
 "UARTDEBUG.d" \
 "syscfg\ti_drivers_config.d" \
 "hal_main.d" \
@@ -96,6 +101,7 @@ C_SRCS__QUOTED += \
 "../GPS.c" \
 "../MPU6050.c" \
 "../MPU9250.c" \
+"../QMC5883.c" \
 "../UARTDEBUG.c" \
 "./syscfg/ti_drivers_config.c" \
 "../hal_main.c" \

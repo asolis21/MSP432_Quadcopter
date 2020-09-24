@@ -14,6 +14,7 @@ ORDERED_OBJS += \
 "./GPS.obj" \
 "./MPU6050.obj" \
 "./MPU9250.obj" \
+"./QMC5883.obj" \
 "./UARTDEBUG.obj" \
 "./syscfg/ti_drivers_config.obj" \
 "./hal_main.obj" \
@@ -181,8 +182,8 @@ Quadcopter_HAL.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(GEN_MISC_FILES__QUOTED)$(BIN_OUTPUTS__QUOTED)$(GEN_FILES__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "BME280.obj" "GPS.obj" "MPU6050.obj" "MPU9250.obj" "UARTDEBUG.obj" "syscfg\ti_drivers_config.obj" "hal_main.obj" "madgwick.obj" "main.obj" "servo.obj" "EasyHal\adc_dev.obj" "EasyHal\i2c_dev.obj" "EasyHal\pwm_dev.obj" "EasyHal\spi_dev.obj" "EasyHal\time_dev.obj" "EasyHal\uart_dev.obj" 
-	-$(RM) "BME280.d" "GPS.d" "MPU6050.d" "MPU9250.d" "UARTDEBUG.d" "syscfg\ti_drivers_config.d" "hal_main.d" "madgwick.d" "main.d" "servo.d" "EasyHal\adc_dev.d" "EasyHal\i2c_dev.d" "EasyHal\pwm_dev.d" "EasyHal\spi_dev.d" "EasyHal\time_dev.d" "EasyHal\uart_dev.d" 
+	-$(RM) "BME280.obj" "GPS.obj" "MPU6050.obj" "MPU9250.obj" "QMC5883.obj" "UARTDEBUG.obj" "syscfg\ti_drivers_config.obj" "hal_main.obj" "madgwick.obj" "main.obj" "servo.obj" "EasyHal\adc_dev.obj" "EasyHal\i2c_dev.obj" "EasyHal\pwm_dev.obj" "EasyHal\spi_dev.obj" "EasyHal\time_dev.obj" "EasyHal\uart_dev.obj" 
+	-$(RM) "BME280.d" "GPS.d" "MPU6050.d" "MPU9250.d" "QMC5883.d" "UARTDEBUG.d" "syscfg\ti_drivers_config.d" "hal_main.d" "madgwick.d" "main.d" "servo.d" "EasyHal\adc_dev.d" "EasyHal\i2c_dev.d" "EasyHal\pwm_dev.d" "EasyHal\spi_dev.d" "EasyHal\time_dev.d" "EasyHal\uart_dev.d" 
 	-$(RMDIR) $(GEN_MISC_DIRS__QUOTED)
 	-@echo 'Finished clean'
 	-@echo ' '

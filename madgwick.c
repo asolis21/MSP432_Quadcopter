@@ -1,16 +1,19 @@
 #include "madgwick.h"
 #include <math.h>
+#include <stdbool.h>
 
+bool beta_init = true;
 float beta;
 float q[4] = {1.0f, 0.0f, 0.0f, 0.0f};
 
-void Madgwick_init(void)
-{
-    beta = sqrt(3.0f/4.0f)*M_PI*(4.0f/180.0f);
-}
-
 void Madgwick_quaternion_update(float ax, float ay, float az, float gx, float gy, float gz, float mx, float my, float mz, float deltat)
 {
+    if(beta_init)
+    {
+        beta = sqrt(3.0f/4.0f)*M_PI*(4.0f/180.0f);
+        beta_init = false;
+    }
+
     float q1 = q[0], q2 = q[1], q3 = q[2], q4 = q[3];   // short name local variable for readability
     float norm;
     float hx, hy, _2bx, _2bz;

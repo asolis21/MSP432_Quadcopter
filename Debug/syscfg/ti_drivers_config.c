@@ -263,8 +263,8 @@ static const UARTMSP432_HWAttrsV1 uartMSP432HWAttrs[CONFIG_UART_COUNT] = {
     .errorFxn           = NULL
   },
   {
-    .baseAddr           = EUSCI_A2_BASE,
-    .intNum             = INT_EUSCIA2,
+    .baseAddr           = EUSCI_A1_BASE,
+    .intNum             = INT_EUSCIA1,
     .intPriority        = (~0),
     .clockSource        = EUSCI_A_UART_CLOCKSOURCE_SMCLK,
     .bitOrder           = EUSCI_A_UART_LSB_FIRST,
@@ -273,8 +273,8 @@ static const UARTMSP432_HWAttrsV1 uartMSP432HWAttrs[CONFIG_UART_COUNT] = {
     .baudrateLUT        = uartMSP432Baudrates,
     .ringBufPtr         = uartMSP432RingBuffer1,
     .ringBufSize        = sizeof(uartMSP432RingBuffer1),
-    .rxPin              = UARTMSP432_P3_2_UCA2RXD,
-    .txPin              = UARTMSP432_P3_3_UCA2TXD,
+    .rxPin              = UARTMSP432_P3_3_UCA1RXD,
+    .txPin              = UARTMSP432_P3_2_UCA1TXD,
     .errorFxn           = NULL
   },
 };

@@ -4,7 +4,7 @@
 
 SHELL = cmd.exe
 
-CG_TOOL_ROOT := C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS
+CG_TOOL_ROOT := C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS
 
 GEN_OPTS__FLAG := 
 GEN_CMDS__FLAG := 
@@ -16,10 +16,10 @@ ORDERED_OBJS += \
 "./MPU9250.obj" \
 "./QMC5883.obj" \
 "./UARTDEBUG.obj" \
-"./syscfg/ti_drivers_config.obj" \
 "./hal_main.obj" \
 "./madgwick.obj" \
 "./main.obj" \
+"./syscfg/ti_drivers_config.obj" \
 "./servo.obj" \
 "./EasyHal/adc_dev.obj" \
 "./EasyHal/i2c_dev.obj" \
@@ -162,35 +162,35 @@ all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@$(MAKE) --no-print-directory -Onone "Quadcopter_HAL.out"
 
 dependents:
-	-cd C:/Users/amartinezacosta/workspace_v9/freertos_builds_MSP_EXP432P401R_release_ccs/Debug && $(MAKE) all
+	-cd C:/Users/amart/workspace_v9/freertos_builds_MSP_EXP432P401R_release_ccs/Debug && $(MAKE) all
 
 # Tool invocations
-Quadcopter_HAL.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS) C:/Users/amartinezacosta/workspace_v9/freertos_builds_MSP_EXP432P401R_release_ccs/Debug/freertos_builds_MSP_EXP432P401R_release_ccs.lib
+Quadcopter_HAL.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS) C:/Users/amart/workspace_v9/freertos_builds_MSP_EXP432P401R_release_ccs/Debug/freertos_builds_MSP_EXP432P401R_release_ccs.lib
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: ARM Linker'
-	"C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --advice:power=none -g --diag_warning=225 --diag_warning=255 --diag_wrap=off --display_error_number --gen_func_subsections=on -z -m"Quadcopter_HAL.map" -i"C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source" -i"C:/Users/amartinezacosta/workspace_v9/freertos_builds_MSP_EXP432P401R_release_ccs/Debug" -i"C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/lib" --diag_suppress=10063 --diag_wrap=off --display_error_number --warn_sections --xml_link_info="Quadcopter_HAL_linkInfo.xml" --rom_model -o "Quadcopter_HAL.out" $(ORDERED_OBJS)
+	"C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --advice:power=none -g --diag_warning=225 --diag_warning=255 --diag_wrap=off --display_error_number --gen_func_subsections=on -z -m"Quadcopter_HAL.map" -i"C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source" -i"C:/Users/amart/workspace_v9/freertos_builds_MSP_EXP432P401R_release_ccs/Debug" -i"C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/lib" --diag_suppress=10063 --diag_wrap=off --display_error_number --warn_sections --xml_link_info="Quadcopter_HAL_linkInfo.xml" --rom_model -o "Quadcopter_HAL.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 
 Quadcopter_HAL.hex: $(EXE_OUTPUTS)
 	@echo 'Building files: $(strip $(EXE_OUTPUTS__QUOTED))'
 	@echo 'Invoking: ARM Hex Utility'
-	"C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/bin/armhex"  -o "Quadcopter_HAL.hex" $(EXE_OUTPUTS__QUOTED)
+	"C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/bin/armhex"  -o "Quadcopter_HAL.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $(strip $(EXE_OUTPUTS__QUOTED))'
 	@echo ' '
 
 # Other Targets
 clean:
 	-$(RM) $(GEN_MISC_FILES__QUOTED)$(BIN_OUTPUTS__QUOTED)$(GEN_FILES__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "BME280.obj" "GPS.obj" "MPU6050.obj" "MPU9250.obj" "QMC5883.obj" "UARTDEBUG.obj" "syscfg\ti_drivers_config.obj" "hal_main.obj" "madgwick.obj" "main.obj" "servo.obj" "EasyHal\adc_dev.obj" "EasyHal\i2c_dev.obj" "EasyHal\pwm_dev.obj" "EasyHal\spi_dev.obj" "EasyHal\time_dev.obj" "EasyHal\uart_dev.obj" 
-	-$(RM) "BME280.d" "GPS.d" "MPU6050.d" "MPU9250.d" "QMC5883.d" "UARTDEBUG.d" "syscfg\ti_drivers_config.d" "hal_main.d" "madgwick.d" "main.d" "servo.d" "EasyHal\adc_dev.d" "EasyHal\i2c_dev.d" "EasyHal\pwm_dev.d" "EasyHal\spi_dev.d" "EasyHal\time_dev.d" "EasyHal\uart_dev.d" 
+	-$(RM) "BME280.obj" "GPS.obj" "MPU6050.obj" "MPU9250.obj" "QMC5883.obj" "UARTDEBUG.obj" "hal_main.obj" "madgwick.obj" "main.obj" "syscfg\ti_drivers_config.obj" "servo.obj" "EasyHal\adc_dev.obj" "EasyHal\i2c_dev.obj" "EasyHal\pwm_dev.obj" "EasyHal\spi_dev.obj" "EasyHal\time_dev.obj" "EasyHal\uart_dev.obj" 
+	-$(RM) "BME280.d" "GPS.d" "MPU6050.d" "MPU9250.d" "QMC5883.d" "UARTDEBUG.d" "hal_main.d" "madgwick.d" "main.d" "syscfg\ti_drivers_config.d" "servo.d" "EasyHal\adc_dev.d" "EasyHal\i2c_dev.d" "EasyHal\pwm_dev.d" "EasyHal\spi_dev.d" "EasyHal\time_dev.d" "EasyHal\uart_dev.d" 
 	-$(RMDIR) $(GEN_MISC_DIRS__QUOTED)
 	-@echo 'Finished clean'
 	-@echo ' '
 
 .PHONY: all clean dependents
 .SECONDARY:
-C:/Users/amartinezacosta/workspace_v9/freertos_builds_MSP_EXP432P401R_release_ccs/Debug/freertos_builds_MSP_EXP432P401R_release_ccs.lib:
+C:/Users/amart/workspace_v9/freertos_builds_MSP_EXP432P401R_release_ccs/Debug/freertos_builds_MSP_EXP432P401R_release_ccs.lib:
 
 -include ../makefile.targets
 

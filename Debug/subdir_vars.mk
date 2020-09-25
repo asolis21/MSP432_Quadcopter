@@ -9,7 +9,7 @@ CMD_SRCS += \
 ../MSP_EXP432P401R_FREERTOS.cmd 
 
 SYSCFG_SRCS += \
-../drone.syscfg 
+../quadcopter.syscfg 
 
 C_SRCS += \
 ../BME280.c \
@@ -18,10 +18,10 @@ C_SRCS += \
 ../MPU9250.c \
 ../QMC5883.c \
 ../UARTDEBUG.c \
-./syscfg/ti_drivers_config.c \
 ../hal_main.c \
 ../madgwick.c \
 ../main.c \
+./syscfg/ti_drivers_config.c \
 ../servo.c 
 
 GEN_FILES += \
@@ -37,10 +37,10 @@ C_DEPS += \
 ./MPU9250.d \
 ./QMC5883.d \
 ./UARTDEBUG.d \
-./syscfg/ti_drivers_config.d \
 ./hal_main.d \
 ./madgwick.d \
 ./main.d \
+./syscfg/ti_drivers_config.d \
 ./servo.d 
 
 OBJS += \
@@ -50,10 +50,10 @@ OBJS += \
 ./MPU9250.obj \
 ./QMC5883.obj \
 ./UARTDEBUG.obj \
-./syscfg/ti_drivers_config.obj \
 ./hal_main.obj \
 ./madgwick.obj \
 ./main.obj \
+./syscfg/ti_drivers_config.obj \
 ./servo.obj 
 
 GEN_MISC_FILES += \
@@ -70,10 +70,10 @@ OBJS__QUOTED += \
 "MPU9250.obj" \
 "QMC5883.obj" \
 "UARTDEBUG.obj" \
-"syscfg\ti_drivers_config.obj" \
 "hal_main.obj" \
 "madgwick.obj" \
 "main.obj" \
+"syscfg\ti_drivers_config.obj" \
 "servo.obj" 
 
 GEN_MISC_FILES__QUOTED += \
@@ -87,10 +87,10 @@ C_DEPS__QUOTED += \
 "MPU9250.d" \
 "QMC5883.d" \
 "UARTDEBUG.d" \
-"syscfg\ti_drivers_config.d" \
 "hal_main.d" \
 "madgwick.d" \
 "main.d" \
+"syscfg\ti_drivers_config.d" \
 "servo.d" 
 
 GEN_FILES__QUOTED += \
@@ -103,13 +103,13 @@ C_SRCS__QUOTED += \
 "../MPU9250.c" \
 "../QMC5883.c" \
 "../UARTDEBUG.c" \
-"./syscfg/ti_drivers_config.c" \
 "../hal_main.c" \
 "../madgwick.c" \
 "../main.c" \
+"./syscfg/ti_drivers_config.c" \
 "../servo.c" 
 
 SYSCFG_SRCS__QUOTED += \
-"../drone.syscfg" 
+"../quadcopter.syscfg" 
 
 

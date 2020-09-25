@@ -1,21 +1,21 @@
 # FIXED
 
 syscfg/ti_drivers_config.obj: syscfg/ti_drivers_config.c
-syscfg/ti_drivers_config.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/stddef.h
-syscfg/ti_drivers_config.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/_ti_config.h
-syscfg/ti_drivers_config.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/linkage.h
+syscfg/ti_drivers_config.obj: C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/stddef.h
+syscfg/ti_drivers_config.obj: C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/_ti_config.h
+syscfg/ti_drivers_config.obj: C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/linkage.h
 syscfg/ti_drivers_config.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/devices/DeviceFamily.h
 syscfg/ti_drivers_config.obj: syscfg/ti_drivers_config.h
-syscfg/ti_drivers_config.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/stdint.h
-syscfg/ti_drivers_config.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/_stdint40.h
-syscfg/ti_drivers_config.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/sys/stdint.h
-syscfg/ti_drivers_config.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/sys/cdefs.h
-syscfg/ti_drivers_config.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/sys/_types.h
-syscfg/ti_drivers_config.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/machine/_types.h
-syscfg/ti_drivers_config.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/machine/_stdint.h
-syscfg/ti_drivers_config.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/sys/_stdint.h
+syscfg/ti_drivers_config.obj: C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/stdint.h
+syscfg/ti_drivers_config.obj: C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/_stdint40.h
+syscfg/ti_drivers_config.obj: C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/sys/stdint.h
+syscfg/ti_drivers_config.obj: C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/sys/cdefs.h
+syscfg/ti_drivers_config.obj: C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/sys/_types.h
+syscfg/ti_drivers_config.obj: C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/machine/_types.h
+syscfg/ti_drivers_config.obj: C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/machine/_stdint.h
+syscfg/ti_drivers_config.obj: C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/sys/_stdint.h
 syscfg/ti_drivers_config.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/I2C.h
-syscfg/ti_drivers_config.obj: C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/stdbool.h
+syscfg/ti_drivers_config.obj: C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/stdbool.h
 syscfg/ti_drivers_config.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/i2c/I2CMSP432.h
 syscfg/ti_drivers_config.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/dpl/HwiP.h
 syscfg/ti_drivers_config.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/dpl/SemaphoreP.h
@@ -50,21 +50,21 @@ syscfg/ti_drivers_config.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti
 syscfg/ti_drivers_config.obj: C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/Board.h
 
 syscfg/ti_drivers_config.c: 
-C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/stddef.h: 
-C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/_ti_config.h: 
-C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/linkage.h: 
+C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/stddef.h: 
+C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/_ti_config.h: 
+C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/linkage.h: 
 C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/devices/DeviceFamily.h: 
 syscfg/ti_drivers_config.h: 
-C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/stdint.h: 
-C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/_stdint40.h: 
-C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/sys/stdint.h: 
-C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/sys/cdefs.h: 
-C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/sys/_types.h: 
-C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/machine/_types.h: 
-C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/machine/_stdint.h: 
-C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/sys/_stdint.h: 
+C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/stdint.h: 
+C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/_stdint40.h: 
+C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/sys/stdint.h: 
+C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/sys/cdefs.h: 
+C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/sys/_types.h: 
+C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/machine/_types.h: 
+C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/machine/_stdint.h: 
+C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/sys/_stdint.h: 
 C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/I2C.h: 
-C:/ti/ccs930/ccs/tools/compiler/ti-cgt-arm_18.12.4.LTS/include/stdbool.h: 
+C:/ti/ccs910/ccs/tools/compiler/ti-cgt-arm_18.12.2.LTS/include/stdbool.h: 
 C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/i2c/I2CMSP432.h: 
 C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/dpl/HwiP.h: 
 C:/ti/simplelink_msp432p4_sdk_3_40_01_02/source/ti/drivers/dpl/SemaphoreP.h: 

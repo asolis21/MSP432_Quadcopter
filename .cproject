@@ -100,6 +100,9 @@
 									<listOptionValue builtIn="false" value="${INHERITED_SYSCONFIG_MANIFESTS}"/>
 									<listOptionValue builtIn="false" value="${COM_TI_SIMPLELINK_MSP432_SDK_INSTALL_DIR}/.metadata/product.json"/>
 								</option>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="com.ti.ccstudio.buildDefinitions.sysConfig.OTHER_FLAGS.288435516" name="Other flags" superClass="com.ti.ccstudio.buildDefinitions.sysConfig.OTHER_FLAGS" valueType="stringList">
+									<listOptionValue builtIn="false" value=""/>
+								</option>
 							</tool>
 						</toolChain>
 					</folderInfo>
@@ -109,7 +112,7 @@
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings">
-				<externalSettings containerId="freertos_builds_MSP_EXP432P401R_release_ccs;com.ti.ccstudio.buildDefinitions.MSP432.Debug.1385024956" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier"/>
+				<externalSettings containerId="freertos_builds_MSP_EXP432P401R_release_ccs;com.ti.ccstudio.buildDefinitions.MSP432.Debug.1498130844" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier"/>
 			</storageModule>
 		</cconfiguration>
 	</storageModule>

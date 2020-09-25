@@ -79,8 +79,8 @@ extern "C" {
  */
 #define CONFIG_UART_0               0
 /*
- *  TX: P3.3
- *  RX: P3.2
+ *  TX: P3.2
+ *  RX: P3.3
  */
 #define CONFIG_UART_1               1
 

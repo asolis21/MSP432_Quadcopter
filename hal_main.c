@@ -83,9 +83,9 @@ void *mainThread(void *arg0)
         m_yaw = (m_yaw > 360.0f) ? (m_yaw - 360.0f) : m_yaw;
         m_yaw = (m_yaw < 0) ? (m_yaw + 360.0f) : m_yaw;
 
-        UARTDEBUG_printf("a_pitch = %f, a_roll = %f, ", a_pitch, a_roll);
-        UARTDEBUG_printf("g_pitch = %f, g_roll = %f, g_yaw = %f, ", g_pitch, g_roll, g_yaw);
-        UARTDEBUG_printf("m_yaw = %f, dt = %f\r\n", m_yaw, dt);
+        //UARTDEBUG_printf("a_pitch = %f, a_roll = %f, ", a_pitch, a_roll);
+        //UARTDEBUG_printf("g_pitch = %f, g_roll = %f, g_yaw = %f, ", g_pitch, g_roll, g_yaw);
+        //UARTDEBUG_printf("m_yaw = %f, dt = %f\r\n", m_yaw, dt);
 
         dt = (millis() - start)/1e3;
     }

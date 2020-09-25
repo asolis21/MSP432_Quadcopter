@@ -13,7 +13,7 @@
 	<ignoreDefaultDeviceSettings value="true"/>
 	<ignoreDefaultCCSSettings value="true"/>
 	<templateProperties value="id=empty_MSP_EXP432P401R_freertos_ccs.projectspec.empty_MSP_EXP432P401R_freertos_ccs,buildProfile=release,isHybrid=true"/>
-	<origin value="C:/Users/amart/git/MSP432_Quadcopter"/>
+	<origin value="C:/Users/Alex/workspace_v9_2/MSP432_Quadcopter"/>
 	<filesToOpen value=""/>
 	<isTargetManual value="false"/>
 </projectOptions>

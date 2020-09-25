@@ -112,7 +112,7 @@
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings">
-				<externalSettings containerId="freertos_builds_MSP_EXP432P401R_release_ccs;com.ti.ccstudio.buildDefinitions.MSP432.Debug.1498130844" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier"/>
+				<externalSettings containerId="freertos_builds_MSP_EXP432P401R_release_ccs;com.ti.ccstudio.buildDefinitions.MSP432.Debug.1351198818" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier"/>
 			</storageModule>
 		</cconfiguration>
 	</storageModule>
